@@ -20,7 +20,7 @@ function RootComponent() {
         <Link to="/">Home</Link>
         <Link to="/login">Login</Link>
       </nav>
-      <div className='h-full px-2 py-2 bg-slate-800 text-white'>
+      <div>
         <Outlet />
         <TanStackRouterDevtools />
         <ReactQueryDevtools />
