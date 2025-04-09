@@ -4,6 +4,14 @@
 
 Master branch deployment status [![Netlify Status](https://api.netlify.com/api/v1/badges/d783cd62-5581-4e5f-b24f-cb674f95670b/deploy-status)](https://app.netlify.com/sites/alcb1310-bca-final/deploys)
 
+## Table of Contents
+
+- [Description](#description)
+- [Features](#features)
+- [Deployment](#deployment)
+- [License](#license)
+- [Author](#author)
+
 ## Tech stack
 
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
@@ -18,15 +26,25 @@ Master branch deployment status [![Netlify Status](https://api.netlify.com/api/v
 
 ## Description
 
+This project helps to manage a construction company's budget. There are severall steps in order for it to work:
+
+- Add a project information
+- Create a budget for the project
+- Add expenses to the budget
+- Update the budget if the price of the supply has changed
+- Generate different reports
+
+With all this information, the goal of this application is help managemet to make better and more time efficient decisions.
+
 ## Features
 
-## Roadmap
+## Deployment
 
 ## License
 
 Refere to the [License](LICENSE)
 
-## Acknowledgments
+## Author
 
 Andres Court
 
