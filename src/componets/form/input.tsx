@@ -1,4 +1,4 @@
-import { useFieldContext } from "@/hooks/bca.form";
+import { useFieldContext } from '@/hooks/bca.form';
 
 export function TextField({
   label,
@@ -12,7 +12,7 @@ export function TextField({
   return (
     <div>
       <label htmlFor={label}>{label}</label>
-      <input type="text" placeholder={placeholder} value={field.state.value} />
+      <input type='text' placeholder={placeholder} value={field.state.value} />
     </div>
   );
 }

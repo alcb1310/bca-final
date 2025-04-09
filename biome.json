@@ -6,13 +6,15 @@
     "useIgnoreFile": false
   },
   "files": {
-    "ignoreUnknown": false,
-    "ignore": ["node_modules", "dist", "src/routeTree.gen.ts"]
+    "ignoreUnknown": true,
+    "ignore": ["node_modules", "dist", "src/routeTree.gen.ts", "biome.json"],
+    "include": ["src/**/*.{js,jsx,ts,tsx}"]
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
-    "indentWidth": 2
+    "indentWidth": 2,
+    "formatWithErrors": true
   },
   "organizeImports": {
     "enabled": true
