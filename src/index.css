@@ -1,15 +1,1 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-}
-
-nav {
-  display: flex;
-  gap: 1rem;
-}
-
-a {
-  text-decoration: none;
-  color: blue;
-}
+@import "tailwindcss";

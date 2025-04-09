@@ -15,14 +15,16 @@ export const Route = createRootRouteWithContext<{
 
 function RootComponent() {
   return (
-    <>
-      <nav>
-        <Link to='/'>Home</Link>
-        <Link to='/login'>Login</Link>
+    <div className='h-screen'>
+      <nav className="px-2 py-4 flex gap-4 text-blue-600 font-bold tracking-wider uppercase text-xs">
+        <Link to="/">Home</Link>
+        <Link to="/login">Login</Link>
       </nav>
-      <Outlet />
-      <TanStackRouterDevtools />
-      <ReactQueryDevtools />
-    </>
+      <div className='h-full px-2 py-2 bg-slate-800 text-white'>
+        <Outlet />
+        <TanStackRouterDevtools />
+        <ReactQueryDevtools />
+      </div>
+    </div>
   );
 }
