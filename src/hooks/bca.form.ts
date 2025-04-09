@@ -1,5 +1,5 @@
-import { TextField } from '@/componets/form/input';
-import { SubscribeButton } from '@/componets/form/subscribe-button';
+import { TextField } from '@/components/form/input';
+import { SubscribeButton } from '@/components/form/subscribe-button';
 import { createFormHook, createFormHookContexts } from '@tanstack/react-form';
 
 export const { fieldContext, useFieldContext, formContext, useFormContext } =

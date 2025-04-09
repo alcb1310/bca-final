@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { useFormContext } from '@/hooks/bca.form';
 
 export function SubscribeButton({ label }: { label: string }) {
@@ -6,9 +7,9 @@ export function SubscribeButton({ label }: { label: string }) {
   return (
     <form.Subscribe selector={(state) => state.isSubmitting}>
       {(isSubmitting) => (
-        <button type='submit' disabled={isSubmitting}>
+        <Button type='submit' disabled={isSubmitting}>
           {label}
-        </button>
+        </Button>
       )}
     </form.Subscribe>
   );
