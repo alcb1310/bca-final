@@ -1,4 +1,5 @@
-import { useFormContext } from "../../hooks/bca.form";
+import { useFormContext } from "@/hooks/bca.form";
+
 export function SubscribeButton({ label }: { label: string }) {
   const form = useFormContext()
 
