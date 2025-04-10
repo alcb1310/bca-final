@@ -1,3 +1,4 @@
+import Greet from '@/components/greet/Greet';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_auth/')({
@@ -5,5 +6,5 @@ export const Route = createFileRoute('/_auth/')({
 });
 
 function RouteComponent() {
-  return <div>Hello "/"!</div>;
+  return <div><Greet name='Andres' /></div>;
 }
