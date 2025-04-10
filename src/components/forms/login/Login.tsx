@@ -9,12 +9,22 @@ import {
 import { useAppForm } from '@/hooks/bca.form'
 import { useRouter } from '@tanstack/react-router'
 
+import { z } from 'zod'
+
+const loginSchema = z.object({
+  email: z.string({ message: 'Ingrese un correo válido' }).email({ message: 'Ingrese un correo válido' }),
+  password: z.string().min(1, { message: 'Contraseña requerida' }),
+})
+
 export default function Login() {
   const router = useRouter()
   const form = useAppForm({
     defaultValues: {
       email: '',
       password: '',
+    },
+    validators: {
+      onSubmit: loginSchema
     },
     onSubmit: (values) => {
       console.log(values)
