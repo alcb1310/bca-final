@@ -9,8 +9,6 @@ describe('Login', () => {
   })
 
   it('should render', () => {
-    screen.debug()
-
     const title = screen.getByTestId('login-title')
     expect(title).toBeInTheDocument()
     expect(title).toHaveTextContent(/iniciar sesión/i)
@@ -44,17 +42,20 @@ describe('Login', () => {
 
   it('should display an error is no email is provided', async () => {
     const emailInput = screen.getByTestId('login-email-input')
-    expect(emailInput).toBeInTheDocument()
-    expect(emailInput).toHaveValue('')
-    expect(emailInput).toHaveAttribute('placeholder', 'test@test.com')
+    const passwordInput = screen.getByTestId('login-password-input')
 
     const submitButton = screen.getByTestId('login-submit')
     const user = userEvent.setup()
     await user.click(submitButton)
 
-    screen.debug()
-
     const emailError = screen.getByTestId('login-email-error')
     expect(emailError).toBeInTheDocument()
+    expect(emailError).toHaveTextContent(/ingrese un correo válido/i)
+    expect(emailInput).toHaveClass('border-destructive')
+
+    const passwordError = screen.queryByTestId('login-password-error')
+    expect(passwordError).toBeInTheDocument()
+    expect(passwordError).toHaveTextContent(/contraseña requerida/i)
+    expect(passwordInput).toHaveClass('border-destructive')
   })
 })
