@@ -4,10 +4,12 @@ import { cn } from '@/lib/utils';
 
 export function SubscribeButton({
   label,
-  className
+  className,
+  testId
 }: {
   label: string,
   className?: string
+  testId?: string
 }) {
   const form = useFormContext();
 
@@ -19,6 +21,7 @@ export function SubscribeButton({
           variant='default'
           disabled={isSubmitting}
           className={cn('w-full', className)}
+          data-testid={testId}
         >
           {label}
         </Button>
