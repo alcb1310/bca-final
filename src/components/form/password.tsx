@@ -32,8 +32,9 @@ export function PasswordTextField({
         onChange={(e) => field.handleChange(e.target.value)}
         onBlur={field.handleBlur}
         data-testid={`${testId}-input`}
+        className={errors.length > 0 ? 'border-destructive' : ''}
       />
-      {field.state.meta.isTouched && <ErrorMessages errors={errors} />}
+      {field.state.meta.isTouched && <ErrorMessages errors={errors} testId={testId} />}
     </div>
   );
 }

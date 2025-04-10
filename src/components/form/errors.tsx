@@ -10,7 +10,7 @@ export function ErrorMessages({
       {errors.map((error) => (
         <p
           key={typeof error === 'string' ? error : error.message}
-          className='mt-1 text-destructive'
+          className='mt-1 text-xs font-bold text-destructive'
           data-testid={`${testId}-error`}
         >
           {typeof error === 'string' ? error : error.message}

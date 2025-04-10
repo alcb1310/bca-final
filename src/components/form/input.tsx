@@ -31,6 +31,7 @@ export function TextField({
         onChange={(e) => field.handleChange(e.target.value)}
         onBlur={field.handleBlur}
         data-testid={`${testId}-input`}
+        className={errors.length > 0 ? 'border-destructive' : ''}
       />
       {field.state.meta.isTouched && <ErrorMessages errors={errors} testId={testId} />}
     </div>
