@@ -1,4 +1,5 @@
-import { createFileRoute, Link, Outlet } from '@tanstack/react-router'
+import Nav from '@/components/nav/Nav'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_auth')({
   component: RouteComponent,
@@ -6,11 +7,7 @@ export const Route = createFileRoute('/_auth')({
 
 function RouteComponent() {
   return <div>
-    <nav className="px-2 py-4 flex gap-4 text-blue-600 font-bold tracking-wider uppercase text-xs">
-      <Link to="/">Home</Link>
-      <Link to="/login">Login</Link>
-    </nav>
-
+    <Nav />
     <Outlet />
   </div>
 }
