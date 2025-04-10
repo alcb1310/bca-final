@@ -1,4 +1,3 @@
-import ThemeToggle from '@/components/theme/theme-toggle';
 import type { QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import {
@@ -16,7 +15,6 @@ export const Route = createRootRouteWithContext<{
 function RootComponent() {
   return (
     <div className='h-screen'>
-      <ThemeToggle />
       <Outlet />
       <TanStackRouterDevtools />
       <ReactQueryDevtools />

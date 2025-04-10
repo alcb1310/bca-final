@@ -1,4 +1,5 @@
 import Nav from '@/components/nav/Nav'
+import ThemeToggle from '@/components/theme/theme-toggle'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_auth')({
@@ -7,7 +8,10 @@ export const Route = createFileRoute('/_auth')({
 
 function RouteComponent() {
   return <div>
-    <Nav />
+    <div className='flex justify-between'>
+      <Nav />
+      <ThemeToggle />
+    </div>
     <Outlet />
   </div>
 }
