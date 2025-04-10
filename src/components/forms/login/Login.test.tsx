@@ -40,22 +40,44 @@ describe('Login', () => {
     expect(submitButton).toHaveTextContent(/ingresar/i)
   })
 
-  it('should display an error is no email is provided', async () => {
-    const emailInput = screen.getByTestId('login-email-input')
-    const passwordInput = screen.getByTestId('login-password-input')
+  describe('validation', () => {
+    it('should display an error is no email or password is provided', async () => {
+      const emailInput = screen.getByTestId('login-email-input')
+      const passwordInput = screen.getByTestId('login-password-input')
 
-    const submitButton = screen.getByTestId('login-submit')
-    const user = userEvent.setup()
-    await user.click(submitButton)
+      const submitButton = screen.getByTestId('login-submit')
+      const user = userEvent.setup()
+      await user.click(submitButton)
 
-    const emailError = screen.getByTestId('login-email-error')
-    expect(emailError).toBeInTheDocument()
-    expect(emailError).toHaveTextContent(/ingrese un correo válido/i)
-    expect(emailInput).toHaveClass('border-destructive')
+      const emailError = screen.getByTestId('login-email-error')
+      expect(emailError).toBeInTheDocument()
+      expect(emailError).toHaveTextContent(/ingrese un correo válido/i)
+      expect(emailInput).toHaveClass('border-destructive')
 
-    const passwordError = screen.queryByTestId('login-password-error')
-    expect(passwordError).toBeInTheDocument()
-    expect(passwordError).toHaveTextContent(/contraseña requerida/i)
-    expect(passwordInput).toHaveClass('border-destructive')
+      const passwordError = screen.queryByTestId('login-password-error')
+      expect(passwordError).toBeInTheDocument()
+      expect(passwordError).toHaveTextContent(/contraseña requerida/i)
+      expect(passwordInput).toHaveClass('border-destructive')
+    })
+
+    it('should display an error if invalid email is provided', async () => {
+      const emailInput = screen.getByTestId('login-email-input')
+      const passwordInput = screen.getByTestId('login-password-input')
+
+      const submitButton = screen.getByTestId('login-submit')
+      const user = userEvent.setup()
+      await user.type(emailInput, 'test')
+      await user.click(submitButton)
+
+      const emailError = screen.getByTestId('login-email-error')
+      expect(emailError).toBeInTheDocument()
+      expect(emailError).toHaveTextContent(/ingrese un correo válido/i)
+      expect(emailInput).toHaveClass('border-destructive')
+
+      const passwordError = screen.queryByTestId('login-password-error')
+      expect(passwordError).toBeInTheDocument()
+      expect(passwordInput).toHaveClass('border-destructive')
+      expect(passwordError).toHaveTextContent(/contraseña requerida/i)
+    })
   })
 })
