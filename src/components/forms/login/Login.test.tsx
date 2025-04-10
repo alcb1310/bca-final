@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import TestProvider from "@/__mocks__/provider"
 import Login from "./Login"
 
@@ -39,5 +40,21 @@ describe('Login', () => {
     const submitButton = screen.getByTestId('login-submit')
     expect(submitButton).toBeInTheDocument()
     expect(submitButton).toHaveTextContent(/ingresar/i)
+  })
+
+  it('should display an error is no email is provided', async () => {
+    const emailInput = screen.getByTestId('login-email-input')
+    expect(emailInput).toBeInTheDocument()
+    expect(emailInput).toHaveValue('')
+    expect(emailInput).toHaveAttribute('placeholder', 'test@test.com')
+
+    const submitButton = screen.getByTestId('login-submit')
+    const user = userEvent.setup()
+    await user.click(submitButton)
+
+    screen.debug()
+
+    const emailError = screen.getByTestId('login-email-error')
+    expect(emailError).toBeInTheDocument()
   })
 })
