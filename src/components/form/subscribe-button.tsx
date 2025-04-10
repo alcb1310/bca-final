@@ -1,17 +1,17 @@
-import { Button } from '@/components/ui/button';
-import { useFormContext } from '@/hooks/bca.form';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button'
+import { useFormContext } from '@/hooks/bca.form'
+import { cn } from '@/lib/utils'
 
 export function SubscribeButton({
   label,
   className,
-  testId
+  testId,
 }: {
-  label: string,
+  label: string
   className?: string
   testId?: string
 }) {
-  const form = useFormContext();
+  const form = useFormContext()
 
   return (
     <form.Subscribe selector={(state) => state.isSubmitting}>
@@ -27,5 +27,5 @@ export function SubscribeButton({
         </Button>
       )}
     </form.Subscribe>
-  );
+  )
 }

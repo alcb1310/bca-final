@@ -4,15 +4,19 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from '@/components/ui/card'
 import { useAppForm } from '@/hooks/bca.form'
+import { loginProcedure } from '@/queries/auth/login'
+import { useMutation } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
 
 import { z } from 'zod'
 
 const loginSchema = z.object({
-  email: z.string({ message: 'Ingrese un correo válido' }).email({ message: 'Ingrese un correo válido' }),
+  email: z
+    .string({ message: 'Ingrese un correo válido' })
+    .email({ message: 'Ingrese un correo válido' }),
   password: z.string().min(1, { message: 'Contraseña requerida' }),
 })
 
@@ -24,21 +28,36 @@ export default function Login() {
       password: '',
     },
     validators: {
-      onSubmit: loginSchema
+      onSubmit: loginSchema,
     },
-    onSubmit: (values) => {
-      console.log(values)
+    onSubmit: ({ value }) => {
+      mutate(value)
+    },
+  })
 
-      router.navigate({ to: '/' })
-    }
+  const { mutate, isError, error, isPending } = useMutation({
+    mutationFn: async ({
+      email,
+      password,
+    }: { email: string; password: string }) => {
+      const res = await loginProcedure({ email, password })
+      console.log(res)
+
+      router.navigate({
+        to: '/',
+      })
+    },
   })
 
   return (
-    <form className='w-1/2' onSubmit={(e) => {
-      e.preventDefault()
-      e.stopPropagation()
-      form.handleSubmit()
-    }}>
+    <form
+      className='w-1/2'
+      onSubmit={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        form.handleSubmit()
+      }}
+    >
       <Card className='w-2/3 ms-auto me-auto'>
         <CardHeader>
           <CardTitle className='text-xl' data-testid='login-title'>
@@ -47,24 +66,31 @@ export default function Login() {
 
           <CardDescription data-testid='login-description'>
             Ingrese su correo y contraseña para ingresar
+            {isError && (
+              <span className='text-destructive block'>{error.message}</span>
+            )}
           </CardDescription>
         </CardHeader>
 
         <CardContent className='flex flex-col gap-4'>
           <form.AppField name='email'>
-            {(field) => <field.TextField
-              label='Email'
-              testId='login-email'
-              placeholder='test@test.com'
-            />}
+            {(field) => (
+              <field.TextField
+                label='Email'
+                testId='login-email'
+                placeholder='test@test.com'
+              />
+            )}
           </form.AppField>
 
           <form.AppField name='password' data-testid='login-password'>
-            {(field) => <field.PasswordTextField
-              label='Contraseña'
-              testId='login-password'
-              placeholder='su contraseña'
-            />}
+            {(field) => (
+              <field.PasswordTextField
+                label='Contraseña'
+                testId='login-password'
+                placeholder='su contraseña'
+              />
+            )}
           </form.AppField>
         </CardContent>
 
@@ -72,7 +98,7 @@ export default function Login() {
           <form.AppForm>
             <form.SubscribeButton
               label='Ingresar'
-              className='uppercase tracking-wide font-bold'
+              className={'uppercase tracking-wide font-bold'}
               testId='login-submit'
             />
           </form.AppForm>

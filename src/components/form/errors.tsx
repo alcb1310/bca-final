@@ -1,8 +1,8 @@
 export function ErrorMessages({
   errors,
-  testId
+  testId,
 }: {
-  errors: Array<string | { message: string }>;
+  errors: Array<string | { message: string }>
   testId?: string
 }) {
   return (
@@ -17,5 +17,5 @@ export function ErrorMessages({
         </p>
       ))}
     </>
-  );
+  )
 }

@@ -1,20 +1,20 @@
-import { useStore } from "@tanstack/react-form";
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useFieldContext } from '@/hooks/bca.form';
-import { ErrorMessages } from './errors';
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { useFieldContext } from '@/hooks/bca.form'
+import { useStore } from '@tanstack/react-form'
+import { ErrorMessages } from './errors'
 
 export function PasswordTextField({
   label,
   placeholder,
-  testId
+  testId,
 }: {
-  label: string;
-  placeholder?: string;
+  label: string
+  placeholder?: string
   testId?: string
 }) {
-  const field = useFieldContext<string>();
-  const errors = useStore(field.store, (state) => state.meta.errors);
+  const field = useFieldContext<string>()
+  const errors = useStore(field.store, (state) => state.meta.errors)
 
   return (
     <div>
@@ -34,7 +34,9 @@ export function PasswordTextField({
         data-testid={`${testId}-input`}
         className={errors.length > 0 ? 'border-destructive' : ''}
       />
-      {field.state.meta.isTouched && <ErrorMessages errors={errors} testId={testId} />}
+      {field.state.meta.isTouched && (
+        <ErrorMessages errors={errors} testId={testId} />
+      )}
     </div>
-  );
+  )
 }

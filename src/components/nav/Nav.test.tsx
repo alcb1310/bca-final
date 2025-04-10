@@ -1,11 +1,10 @@
-import Nav from "./Nav";
-import { render, screen } from "@testing-library/react";
-import TestProvider from "@/__mocks__/provider";
-
+import TestProvider from '@/__mocks__/provider'
+import { render, screen } from '@testing-library/react'
+import Nav from './Nav'
 
 describe('Nav', () => {
   beforeEach(() => {
-    render(<TestProvider children={Nav} />)
+    render(<TestProvider component={Nav} />)
   })
 
   it('should render', () => {

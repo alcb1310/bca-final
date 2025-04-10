@@ -14,7 +14,7 @@
       "biome.json",
       "src/components/ui"
     ],
-    "include": ["src/**/*.{js,jsx,ts,tsx}"]
+    "include": ["src/**"]
   },
   "formatter": {
     "enabled": true,
@@ -36,7 +36,7 @@
       "quoteStyle": "single",
       "jsxQuoteStyle": "single",
       "trailingCommas": "all",
-      "semicolons": "always"
+      "semicolons": "asNeeded"
     }
   }
 }

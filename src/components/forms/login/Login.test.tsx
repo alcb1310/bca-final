@@ -1,11 +1,11 @@
-import { render, screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
-import TestProvider from "@/__mocks__/provider"
-import Login from "./Login"
+import TestProvider from '@/__mocks__/provider'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import Login from './Login'
 
 describe('Login', () => {
   beforeEach(() => {
-    render(<TestProvider children={Login} />)
+    render(<TestProvider component={Login} />)
   })
 
   it('should render', () => {
@@ -15,7 +15,9 @@ describe('Login', () => {
 
     const description = screen.getByTestId('login-description')
     expect(description).toBeInTheDocument()
-    expect(description).toHaveTextContent(/ingrese su correo y contraseña para ingresar/i)
+    expect(description).toHaveTextContent(
+      /ingrese su correo y contraseña para ingresar/i,
+    )
 
     const emailLabel = screen.getByTestId('login-email-label')
     expect(emailLabel).toBeInTheDocument()
