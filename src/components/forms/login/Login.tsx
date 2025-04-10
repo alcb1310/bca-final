@@ -60,7 +60,7 @@ export default function Login() {
           </form.AppField>
 
           <form.AppField name='password' data-testid='login-password'>
-            {(field) => <field.TextField
+            {(field) => <field.PasswordTextField
               label='Contraseña'
               testId='login-password'
               placeholder='su contraseña'

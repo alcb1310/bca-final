@@ -34,6 +34,7 @@ describe('Login', () => {
     expect(passwordInput).toBeInTheDocument()
     expect(passwordInput).toHaveValue('')
     expect(passwordInput).toHaveAttribute('placeholder', 'su contraseña')
+    expect(passwordInput).toHaveAttribute('type', 'password')
 
     const submitButton = screen.getByTestId('login-submit')
     expect(submitButton).toBeInTheDocument()
