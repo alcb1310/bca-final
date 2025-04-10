@@ -32,7 +32,7 @@ export function TextField({
         onBlur={field.handleBlur}
         data-testid={`${testId}-input`}
       />
-      {field.state.meta.isTouched && <ErrorMessages errors={errors} />}
+      {field.state.meta.isTouched && <ErrorMessages errors={errors} testId={testId} />}
     </div>
   );
 }
