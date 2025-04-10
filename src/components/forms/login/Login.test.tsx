@@ -80,4 +80,19 @@ describe('Login', () => {
       expect(passwordError).toHaveTextContent(/contraseña requerida/i)
     })
   })
+
+  describe('success', () => {
+    it('should login', async () => {
+      const emailInput = screen.getByTestId('login-email-input')
+      const passwordInput = screen.getByTestId('login-password-input')
+
+      const submitButton = screen.getByTestId('login-submit')
+      const user = userEvent.setup()
+      await user.type(emailInput, 'test@test.com')
+      await user.type(passwordInput, 'test')
+      await user.click(submitButton)
+
+      expect(document.location.pathname).toBe('/')
+    })
+  })
 })
