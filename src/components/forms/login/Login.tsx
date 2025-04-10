@@ -35,7 +35,7 @@ export default function Login() {
     },
   })
 
-  const { mutate, isError, error, isPending } = useMutation({
+  const { mutate, isError, error } = useMutation({
     mutationFn: async ({
       email,
       password,
