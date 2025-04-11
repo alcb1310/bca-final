@@ -1,11 +1,16 @@
 import TestProvider from '@/__mocks__/provider'
-import { render, screen } from '@testing-library/react'
+import { render, renderHook, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Login from './Login'
+import { QueryClient, QueryClientProvider, useMutation } from '@tanstack/react-query'
+import { loginProcedure } from '@/queries/auth/login'
+
+const queryClient = new QueryClient()
+
 
 describe('Login', () => {
   beforeEach(() => {
-    render(<TestProvider component={Login} />)
+    render(<QueryClientProvider client={queryClient}><TestProvider component={Login} /></QueryClientProvider>)
   })
 
   it('should render', () => {
@@ -86,6 +91,16 @@ describe('Login', () => {
 
   describe('success', () => {
     it('should login', async () => {
+      vi.mock('@/queries/auth/login', async () => ({
+        loginProcedure: vi.fn().mockResolvedValue({}),
+      }))
+
+      const useMyMutation = async ({ email, password }: { email: string, password: string }) => {
+        return useMutation({
+          mutationFn: await loginProcedure({ email, password }),
+        })
+      }
+
       const emailInput = screen.getByTestId('login-email-input')
       const passwordInput = screen.getByTestId('login-password-input')
 
@@ -95,7 +110,11 @@ describe('Login', () => {
       await user.type(passwordInput, 'test')
       await user.click(submitButton)
 
+      const { result } = renderHook(() => useMyMutation({ 'email': 'test@test.com', 'password': 'test' }))
+      await waitFor(() => expect(result.current).toBeTruthy())
+
       expect(document.location.pathname).toBe('/')
     })
   })
 })
+
