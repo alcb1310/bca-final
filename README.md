@@ -8,6 +8,7 @@ Master branch deployment status [![Netlify Status](https://api.netlify.com/api/v
 
 - [Description](#description)
 - [Features](#features)
+- [Testing](#testing)
 - [Deployment](#deployment)
 - [License](#license)
 - [Author](#author)
@@ -41,7 +42,41 @@ With all this information, the goal of this application is help managemet to mak
 
 ## Features
 
+## Testing
+
+In order to ru the tests, run the following command:
+
+```bash
+pnpm test
+```
+
+If you would like to show the results in a browser, run the following command:
+
+```bash
+pnpm test:ui
+```
+
 ## Deployment
+
+To deploy the application, run the following commands:
+
+```bash
+git clone https://github.com/alcb1310/bca-final.git
+cd bca-final
+pnpm install
+```
+
+You will need to add the following environment variables:
+
+
+```env
+VITE_SERVER_URL=<host address of the server>
+```
+
+```bash
+pnpm build
+pnpm preview
+```
 
 ## License
 
