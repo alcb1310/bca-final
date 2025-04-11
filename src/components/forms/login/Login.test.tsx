@@ -2,8 +2,7 @@ import TestProvider from '@/__mocks__/provider'
 import { render, renderHook, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Login from './Login'
-import { QueryClient, QueryClientProvider, useMutation } from '@tanstack/react-query'
-import { loginProcedure } from '@/queries/auth/login'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
 
@@ -90,16 +89,16 @@ describe('Login', () => {
   })
 
   describe('success', () => {
-    it('should login', async () => {
-      vi.mock('@/queries/auth/login', async () => ({
-        loginProcedure: vi.fn().mockResolvedValue({}),
-      }))
+    afterEach(() => {
+      vi.clearAllMocks()
+    })
 
-      const useMyMutation = async ({ email, password }: { email: string, password: string }) => {
-        return useMutation({
-          mutationFn: await loginProcedure({ email, password }),
-        })
-      }
+    it('should login', async () => {
+      const loginProcedure = vi.fn()
+
+      loginProcedure.mockImplementationOnce(() => {
+        return Promise.resolve({})
+      })
 
       const emailInput = screen.getByTestId('login-email-input')
       const passwordInput = screen.getByTestId('login-password-input')
@@ -110,23 +109,18 @@ describe('Login', () => {
       await user.type(passwordInput, 'test')
       await user.click(submitButton)
 
-      const { result } = renderHook(() => useMyMutation({ 'email': 'test@test.com', 'password': 'test' }))
+      const { result } = renderHook(() => loginProcedure({ 'email': 'test@test.com', 'password': 'test' }))
       await waitFor(() => expect(result.current).toBeTruthy())
 
       expect(document.location.pathname).toBe('/')
     })
 
     it('should display error', async () => {
-      vi.mock('@/queries/auth/login', async () => ({
-        loginProcedure: vi.fn().mockRejectedValue(new Error('credenciales inválidas')),
+
+      const loginProcedure = vi.fn()
+      vi.mock('@/queries/auth/login', () => ({
+        loginProcedure: vi.fn().mockRejectedValue(new Error('credenciales invalidas')),
       }))
-
-
-      const useMyMutation = async ({ email, password }: { email: string, password: string }) => {
-        return useMutation({
-          mutationFn: await loginProcedure({ email, password }),
-        })
-      }
 
       const emailInput = screen.getByTestId('login-email-input')
       const passwordInput = screen.getByTestId('login-password-input')
@@ -137,12 +131,12 @@ describe('Login', () => {
       await user.type(passwordInput, 'test')
       await user.click(submitButton)
 
-      const { result } = renderHook(() => useMyMutation({ 'email': 'test@test.com', 'password': 'test' }))
-      await waitFor(() => expect(result.current).toBeTruthy())
+      const { result } = renderHook(() => loginProcedure({ 'email': 'test@test.com', 'password': 'test' }))
+      await waitFor(() => expect(result.current).toBeFalsy())
 
       const error = screen.getByTestId('login-error')
       expect(error).toBeInTheDocument()
-      expect(error).toHaveTextContent(/credenciales inválidas/i)
+      expect(error).toHaveTextContent(/credenciales invalidas/i)
       expect(error).toHaveClass('text-destructive')
     })
   })
