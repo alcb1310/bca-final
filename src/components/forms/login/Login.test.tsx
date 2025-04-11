@@ -1,15 +1,18 @@
 import TestProvider from '@/__mocks__/provider'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, renderHook, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Login from './Login'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
 
-
 describe('Login', () => {
   beforeEach(() => {
-    render(<QueryClientProvider client={queryClient}><TestProvider component={Login} /></QueryClientProvider>)
+    render(
+      <QueryClientProvider client={queryClient}>
+        <TestProvider component={Login} />
+      </QueryClientProvider>,
+    )
   })
 
   it('should render', () => {
@@ -109,17 +112,20 @@ describe('Login', () => {
       await user.type(passwordInput, 'test')
       await user.click(submitButton)
 
-      const { result } = renderHook(() => loginProcedure({ 'email': 'test@test.com', 'password': 'test' }))
+      const { result } = renderHook(() =>
+        loginProcedure({ email: 'test@test.com', password: 'test' }),
+      )
       await waitFor(() => expect(result.current).toBeTruthy())
 
       expect(document.location.pathname).toBe('/')
     })
 
     it('should display error', async () => {
-
       const loginProcedure = vi.fn()
       vi.mock('@/queries/auth/login', () => ({
-        loginProcedure: vi.fn().mockRejectedValue(new Error('credenciales invalidas')),
+        loginProcedure: vi
+          .fn()
+          .mockRejectedValue(new Error('credenciales invalidas')),
       }))
 
       const emailInput = screen.getByTestId('login-email-input')
@@ -131,7 +137,9 @@ describe('Login', () => {
       await user.type(passwordInput, 'test')
       await user.click(submitButton)
 
-      const { result } = renderHook(() => loginProcedure({ 'email': 'test@test.com', 'password': 'test' }))
+      const { result } = renderHook(() =>
+        loginProcedure({ email: 'test@test.com', password: 'test' }),
+      )
       await waitFor(() => expect(result.current).toBeFalsy())
 
       const error = screen.getByTestId('login-error')
@@ -141,4 +149,3 @@ describe('Login', () => {
     })
   })
 })
-
