@@ -67,7 +67,12 @@ export default function Login() {
           <CardDescription data-testid='login-description'>
             Ingrese su correo y contraseña para ingresar
             {isError && (
-              <span className='text-destructive block'>{error.message}</span>
+              <span
+                className='text-destructive block'
+                data-testid='login-error'
+              >
+                {error.message}
+              </span>
             )}
           </CardDescription>
         </CardHeader>

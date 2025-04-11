@@ -115,6 +115,36 @@ describe('Login', () => {
 
       expect(document.location.pathname).toBe('/')
     })
+
+    it('should display error', async () => {
+      vi.mock('@/queries/auth/login', async () => ({
+        loginProcedure: vi.fn().mockRejectedValue(new Error('credenciales inválidas')),
+      }))
+
+
+      const useMyMutation = async ({ email, password }: { email: string, password: string }) => {
+        return useMutation({
+          mutationFn: await loginProcedure({ email, password }),
+        })
+      }
+
+      const emailInput = screen.getByTestId('login-email-input')
+      const passwordInput = screen.getByTestId('login-password-input')
+
+      const submitButton = screen.getByTestId('login-submit')
+      const user = userEvent.setup()
+      await user.type(emailInput, 'test@test.com')
+      await user.type(passwordInput, 'test')
+      await user.click(submitButton)
+
+      const { result } = renderHook(() => useMyMutation({ 'email': 'test@test.com', 'password': 'test' }))
+      await waitFor(() => expect(result.current).toBeTruthy())
+
+      const error = screen.getByTestId('login-error')
+      expect(error).toBeInTheDocument()
+      expect(error).toHaveTextContent(/credenciales inválidas/i)
+      expect(error).toHaveClass('text-destructive')
+    })
   })
 })
 
