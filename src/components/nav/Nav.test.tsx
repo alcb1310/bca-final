@@ -13,9 +13,8 @@ describe('Nav', () => {
     expect(home).toHaveAttribute('href', '/')
     expect(home).toHaveTextContent(/home/i)
 
-    const login = screen.getByTestId('login-link')
+    const login = screen.getByTestId('logout-link')
     expect(login).toBeInTheDocument()
-    expect(login).toHaveAttribute('href', '/login')
-    expect(login).toHaveTextContent(/login/i)
+    expect(login).toHaveTextContent(/salir/i)
   })
 })
