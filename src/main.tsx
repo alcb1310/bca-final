@@ -6,12 +6,19 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { ThemeProvider } from './components/theme/provider'
 import { routeTree } from './routeTree.gen'
+import { AuthProvider, useAuth } from './utils/auth'
 
 const queryClient = new QueryClient()
 
 const router = createRouter({
   routeTree,
-  context: { queryClient },
+  defaultPreload: 'intent',
+  scrollRestoration: true,
+  context: {
+    queryClient,
+    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    auth: undefined!,
+  },
 })
 
 const root = document.getElementById('root')
@@ -24,7 +31,9 @@ createRoot(root).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme='dark'>
-        <RouterProvider router={router} />
+        <AuthProvider>
+          <InnerApp />
+        </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>,
@@ -34,4 +43,10 @@ declare module '@tanstack/react-router' {
   interface RegisterRouter {
     router: typeof router
   }
+}
+
+function InnerApp() {
+  const auth = useAuth()
+
+  return <RouterProvider router={router} context={{ auth }} />
 }
