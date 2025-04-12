@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/card'
 import { useAppForm } from '@/hooks/bca.form'
 import { loginProcedure } from '@/queries/auth/login'
+import { useAuth } from '@/utils/auth'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
 
@@ -21,6 +22,7 @@ const loginSchema = z.object({
 })
 
 export default function Login() {
+  const auth = useAuth()
   const router = useRouter()
   const form = useAppForm({
     defaultValues: {
@@ -41,7 +43,7 @@ export default function Login() {
       password,
     }: { email: string; password: string }) => {
       const res = await loginProcedure({ email, password })
-      console.log(res)
+      auth.login(res.token)
 
       router.navigate({
         to: '/',

@@ -1,18 +1,11 @@
 import TestProvider from '@/__mocks__/provider'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, renderHook, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Login from './Login'
 
-const queryClient = new QueryClient()
-
 describe('Login', () => {
   beforeEach(() => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <TestProvider component={Login} />
-      </QueryClientProvider>,
-    )
+    render(<TestProvider component={Login} />)
   })
 
   it('should render', () => {
