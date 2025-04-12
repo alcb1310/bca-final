@@ -1,7 +1,7 @@
+import { AuthProvider } from '@/utils/auth'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { type RouteComponent, RouterProvider } from '@tanstack/react-router'
 import { createRootRoute, createRouter } from '@tanstack/react-router'
-import { AuthProvider } from '@/utils/auth'
 
 const rootRoute = createRootRoute()
 const queryClient = new QueryClient()
