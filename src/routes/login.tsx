@@ -7,7 +7,9 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { useAppForm } from "@/hooks/demo.form";
-import { createFileRoute } from "@tanstack/react-router";
+import { login } from "@/queries/auth/login";
+import { useMutation } from "@tanstack/react-query";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { z } from "zod";
 
 const loginSchema = z.object({
@@ -22,6 +24,19 @@ export const Route = createFileRoute("/login")({
 });
 
 function RouteComponent() {
+	const router = useRouter();
+	const { mutate, error, isError } = useMutation({
+		mutationFn: async ({
+			email,
+			password,
+		}: { email: string; password: string }) => login(email, password),
+		onSuccess: ({ token }) => {
+			console.assert(token !== undefined, token);
+			router.navigate({
+				to: "/",
+			});
+		},
+	});
 	const form = useAppForm({
 		defaultValues: {
 			email: "",
@@ -31,7 +46,7 @@ function RouteComponent() {
 			onSubmit: loginSchema,
 		},
 		onSubmit: ({ value }) => {
-			console.log(value);
+			mutate(value);
 		},
 	});
 
@@ -51,6 +66,7 @@ function RouteComponent() {
 
 						<CardDescription>
 							Ingrese su email y contraseña para iniciar sesión
+							{isError && <p className="text-destructive">{error.message}</p>}
 						</CardDescription>
 					</CardHeader>
 
