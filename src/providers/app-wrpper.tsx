@@ -1,4 +1,4 @@
-import { StrictMode, type ReactNode } from "react";
+import { type ReactNode, StrictMode } from "react";
 import * as TanstackQuery from "../integrations/tanstack-query/root-provider";
 import { ThemeProvider } from "./theme-provider";
 

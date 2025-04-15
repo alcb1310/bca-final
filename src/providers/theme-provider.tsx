@@ -1,9 +1,9 @@
 import {
+	type ReactNode,
 	createContext,
 	useContext,
 	useEffect,
 	useState,
-	type ReactNode,
 } from "react";
 
 type Theme = "light" | "dark";
@@ -21,7 +21,7 @@ type ThemeProviderState = {
 
 const initialTheme: ThemeProviderState = {
 	theme: "light",
-	setTheme: () => { },
+	setTheme: () => {},
 };
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialTheme);
