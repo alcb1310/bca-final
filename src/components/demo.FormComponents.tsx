@@ -36,7 +36,7 @@ function ErrorMessages({
 			{errors.map((error) => (
 				<div
 					key={typeof error === "string" ? error : error.message}
-					className="text-red-500 mt-1 font-bold"
+					className="text-sm text-red-500 mt-1"
 				>
 					{typeof error === "string" ? error : error.message}
 				</div>
@@ -65,6 +65,7 @@ export function TextField({
 				placeholder={placeholder}
 				onBlur={field.handleBlur}
 				onChange={(e) => field.handleChange(e.target.value)}
+				className={field.state.meta.isTouched ? "border-destructive" : ""}
 			/>
 			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
 		</div>
@@ -92,6 +93,7 @@ export function PasswordTextField({
 				placeholder={placeholder}
 				onBlur={field.handleBlur}
 				onChange={(e) => field.handleChange(e.target.value)}
+				className={field.state.meta.isTouched ? "border-destructive" : ""}
 			/>
 			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
 		</div>
