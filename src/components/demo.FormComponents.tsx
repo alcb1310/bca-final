@@ -10,12 +10,15 @@ import { Slider as ShadcnSlider } from "@/components/ui/slider";
 import { Switch as ShadcnSwitch } from "@/components/ui/switch";
 import { Textarea as ShadcnTextarea } from "@/components/ui/textarea";
 
-export function SubscribeButton({ label }: { label: string }) {
+export function SubscribeButton({
+	label,
+	className,
+}: { label: string; className?: string }) {
 	const form = useFormContext();
 	return (
 		<form.Subscribe selector={(state) => state.isSubmitting}>
 			{(isSubmitting) => (
-				<Button type="submit" disabled={isSubmitting}>
+				<Button type="submit" disabled={isSubmitting} className={className}>
 					{label}
 				</Button>
 			)}
@@ -58,6 +61,33 @@ export function TextField({
 				{label}
 			</Label>
 			<Input
+				value={field.state.value}
+				placeholder={placeholder}
+				onBlur={field.handleBlur}
+				onChange={(e) => field.handleChange(e.target.value)}
+			/>
+			{field.state.meta.isTouched && <ErrorMessages errors={errors} />}
+		</div>
+	);
+}
+
+export function PasswordTextField({
+	label,
+	placeholder,
+}: {
+	label: string;
+	placeholder?: string;
+}) {
+	const field = useFieldContext<string>();
+	const errors = useStore(field.store, (state) => state.meta.errors);
+
+	return (
+		<div>
+			<Label htmlFor={label} className="mb-2 text-xl font-bold">
+				{label}
+			</Label>
+			<Input
+				type="password"
 				value={field.state.value}
 				placeholder={placeholder}
 				onBlur={field.handleBlur}
