@@ -12,6 +12,7 @@ export default function ThemeToggle() {
         onClick={() => {
           theme.setTheme(theme.theme === 'dark' ? 'light' : 'dark')
         }}
+        size={'icon'}
       >
         {theme.theme === 'dark' ? <Sun /> : <Moon />}
       </Button>
