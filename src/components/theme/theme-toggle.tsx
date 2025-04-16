@@ -13,6 +13,7 @@ export default function ThemeToggle() {
           theme.setTheme(theme.theme === 'dark' ? 'light' : 'dark')
         }}
         size={'icon'}
+        data-testid='theme-toggle'
       >
         {theme.theme === 'dark' ? <Sun /> : <Moon />}
       </Button>

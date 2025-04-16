@@ -15,5 +15,11 @@ describe('TopBar', () => {
 
     const logout = screen.getByTestId('logout')
     expect(logout).toBeInTheDocument()
+
+    const theme = screen.getByTestId('theme-toggle')
+    expect(theme).toBeInTheDocument()
+
+    const user = screen.getByTestId('user-dropdown')
+    expect(user).toBeInTheDocument()
   })
 })
