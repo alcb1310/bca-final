@@ -1,4 +1,4 @@
-const url = `${import.meta.env.VITE_SERVER_URL}/api/v1`
+const url = import.meta.env.VITE_SERVER_URL
 if (!url) {
   throw new Error('VITE_BACKEND_SERVER is not defined')
 }
