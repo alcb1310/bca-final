@@ -13,7 +13,7 @@ export const Route = createRootRouteWithContext<{
 
 function RootComponent() {
   return (
-    <div className='h-screen'>
+    <div className='h-screen bg-muted'>
       <Outlet />
       <TanStackRouterDevtools />
       <ReactQueryDevtools />

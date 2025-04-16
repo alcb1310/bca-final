@@ -14,6 +14,8 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as AuthRouteImport } from './routes/_auth/route'
 import { Route as AuthIndexImport } from './routes/_auth/index'
+import { Route as AuthUsuariosPerfilImport } from './routes/_auth/usuarios/perfil'
+import { Route as AuthUsuariosAdminImport } from './routes/_auth/usuarios/admin'
 
 // Create/Update Routes
 
@@ -31,6 +33,18 @@ const AuthRouteRoute = AuthRouteImport.update({
 const AuthIndexRoute = AuthIndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthUsuariosPerfilRoute = AuthUsuariosPerfilImport.update({
+  id: '/usuarios/perfil',
+  path: '/usuarios/perfil',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthUsuariosAdminRoute = AuthUsuariosAdminImport.update({
+  id: '/usuarios/admin',
+  path: '/usuarios/admin',
   getParentRoute: () => AuthRouteRoute,
 } as any)
 
@@ -59,6 +73,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthIndexImport
       parentRoute: typeof AuthRouteImport
     }
+    '/_auth/usuarios/admin': {
+      id: '/_auth/usuarios/admin'
+      path: '/usuarios/admin'
+      fullPath: '/usuarios/admin'
+      preLoaderRoute: typeof AuthUsuariosAdminImport
+      parentRoute: typeof AuthRouteImport
+    }
+    '/_auth/usuarios/perfil': {
+      id: '/_auth/usuarios/perfil'
+      path: '/usuarios/perfil'
+      fullPath: '/usuarios/perfil'
+      preLoaderRoute: typeof AuthUsuariosPerfilImport
+      parentRoute: typeof AuthRouteImport
+    }
   }
 }
 
@@ -66,10 +94,14 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteRouteChildren {
   AuthIndexRoute: typeof AuthIndexRoute
+  AuthUsuariosAdminRoute: typeof AuthUsuariosAdminRoute
+  AuthUsuariosPerfilRoute: typeof AuthUsuariosPerfilRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthIndexRoute: AuthIndexRoute,
+  AuthUsuariosAdminRoute: AuthUsuariosAdminRoute,
+  AuthUsuariosPerfilRoute: AuthUsuariosPerfilRoute,
 }
 
 const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
@@ -80,11 +112,15 @@ export interface FileRoutesByFullPath {
   '': typeof AuthRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/': typeof AuthIndexRoute
+  '/usuarios/admin': typeof AuthUsuariosAdminRoute
+  '/usuarios/perfil': typeof AuthUsuariosPerfilRoute
 }
 
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/': typeof AuthIndexRoute
+  '/usuarios/admin': typeof AuthUsuariosAdminRoute
+  '/usuarios/perfil': typeof AuthUsuariosPerfilRoute
 }
 
 export interface FileRoutesById {
@@ -92,14 +128,22 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/_auth/': typeof AuthIndexRoute
+  '/_auth/usuarios/admin': typeof AuthUsuariosAdminRoute
+  '/_auth/usuarios/perfil': typeof AuthUsuariosPerfilRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/login' | '/'
+  fullPaths: '' | '/login' | '/' | '/usuarios/admin' | '/usuarios/perfil'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/'
-  id: '__root__' | '/_auth' | '/login' | '/_auth/'
+  to: '/login' | '/' | '/usuarios/admin' | '/usuarios/perfil'
+  id:
+    | '__root__'
+    | '/_auth'
+    | '/login'
+    | '/_auth/'
+    | '/_auth/usuarios/admin'
+    | '/_auth/usuarios/perfil'
   fileRoutesById: FileRoutesById
 }
 
@@ -130,7 +174,9 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth/route.tsx",
       "children": [
-        "/_auth/"
+        "/_auth/",
+        "/_auth/usuarios/admin",
+        "/_auth/usuarios/perfil"
       ]
     },
     "/login": {
@@ -138,6 +184,14 @@ export const routeTree = rootRoute
     },
     "/_auth/": {
       "filePath": "_auth/index.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/usuarios/admin": {
+      "filePath": "_auth/usuarios/admin.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/usuarios/perfil": {
+      "filePath": "_auth/usuarios/perfil.tsx",
       "parent": "/_auth"
     }
   }
