@@ -1,8 +1,8 @@
-import { Link, useRouter } from '@tanstack/react-router'
-import ThemeToggle from '../theme/theme-toggle'
-import { LogOut } from 'lucide-react'
-import { Button } from '../ui/button'
 import { useAuth } from '@/utils/auth'
+import { Link, useRouter } from '@tanstack/react-router'
+import { LogOut } from 'lucide-react'
+import ThemeToggle from '../theme/theme-toggle'
+import { Button } from '../ui/button'
 import UserDropdown from './user/UserDropdown'
 
 export default function TopBar() {
