@@ -11,7 +11,7 @@ import { User } from 'lucide-react'
 
 export default function UserDropdown() {
   return (
-    <div>
+    <div className='mt-1'>
       <DropdownMenu>
         <DropdownMenuTrigger data-testid='user-dropdown'>
           <User size={14} />
