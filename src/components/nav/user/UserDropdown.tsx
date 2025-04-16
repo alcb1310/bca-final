@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,10 +13,8 @@ export default function UserDropdown() {
   return (
     <div>
       <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Button variant={'ghost'} size={'icon'}>
-            <User />
-          </Button>
+        <DropdownMenuTrigger data-testid='user-dropdown'>
+          <User size={14} />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>Usuarios</DropdownMenuLabel>
