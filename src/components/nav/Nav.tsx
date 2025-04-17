@@ -1,24 +1,20 @@
-import { useAuth } from '@/utils/auth'
-import { Link, useRouter } from '@tanstack/react-router'
-import { Button } from '../ui/button'
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarHeader,
+} from '../ui/sidebar'
 
 export default function Nav() {
-  const auth = useAuth()
-  const router = useRouter()
-
-  function logout() {
-    auth.logout()
-    router.invalidate()
-  }
-
   return (
-    <nav className='px-2 py-4 flex items-center gap-4 text-blue-600 font-bold tracking-wider uppercase text-xs'>
-      <Link to='/' data-testid='home-link'>
-        Home
-      </Link>
-      <Button variant={'ghost'} onClick={logout} data-testid='logout-link'>
-        Salir
-      </Button>
-    </nav>
+    <Sidebar className='bg-amber-400'>
+      <SidebarHeader>BCA</SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
   )
 }
