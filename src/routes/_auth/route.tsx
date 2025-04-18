@@ -1,11 +1,6 @@
+import Nav from '@/components/nav/Nav'
 import TopBar from '@/components/nav/TopBar'
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarHeader,
-  SidebarProvider,
-} from '@/components/ui/sidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_auth')({
@@ -22,13 +17,8 @@ export const Route = createFileRoute('/_auth')({
 function RouteComponent() {
   return (
     <SidebarProvider defaultOpen={true}>
+      <Nav />
       <div className='flex w-full flex-row'>
-        <Sidebar>
-          <SidebarHeader>BCA</SidebarHeader>
-          <SidebarContent>
-            <SidebarGroup>Grupo</SidebarGroup>
-          </SidebarContent>
-        </Sidebar>
         <div className='grow'>
           <div className='full flex flex-col '>
             <TopBar />

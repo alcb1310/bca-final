@@ -1,9 +1,15 @@
 import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '../ui/collapsible'
+import {
   Sidebar,
   SidebarContent,
-  SidebarGroup,
-  SidebarGroupLabel,
   SidebarHeader,
+  SidebarMenu,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
 } from '../ui/sidebar'
 
 export default function Nav() {
@@ -11,9 +17,27 @@ export default function Nav() {
     <Sidebar className='bg-amber-400'>
       <SidebarHeader>BCA</SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
-        </SidebarGroup>
+        <SidebarMenu>
+          <Collapsible defaultOpen className='group/collapsible'>
+            <CollapsibleTrigger>Transacciones</CollapsibleTrigger>
+
+            <CollapsibleContent>
+              <SidebarMenuSub>
+                <SidebarMenuSubItem>Presupuesto</SidebarMenuSubItem>
+              </SidebarMenuSub>
+            </CollapsibleContent>
+          </Collapsible>
+
+          <Collapsible defaultOpen className='group/collapsible'>
+            <CollapsibleTrigger>Reportes</CollapsibleTrigger>
+
+            <CollapsibleContent>
+              <SidebarMenuSub>
+                <SidebarMenuSubItem>Actual</SidebarMenuSubItem>
+              </SidebarMenuSub>
+            </CollapsibleContent>
+          </Collapsible>
+        </SidebarMenu>
       </SidebarContent>
     </Sidebar>
   )
