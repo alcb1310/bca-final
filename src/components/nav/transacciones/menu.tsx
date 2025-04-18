@@ -13,6 +13,8 @@ export default function TransaccionesMenu() {
       <CollapsibleContent>
         <SidebarMenuSub>
           <SidebarMenuSubItem>Presupuesto</SidebarMenuSubItem>
+          <SidebarMenuSubItem>Facturas</SidebarMenuSubItem>
+          <SidebarMenuSubItem>Cierre Mensual</SidebarMenuSubItem>
         </SidebarMenuSub>
       </CollapsibleContent>
     </Collapsible>
