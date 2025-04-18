@@ -9,18 +9,35 @@ import { Link } from '@tanstack/react-router'
 export default function TransaccionesMenu() {
   return (
     <Collapsible defaultOpen className='group/collapsible'>
-      <CollapsibleTrigger>Transacciones</CollapsibleTrigger>
+      <CollapsibleTrigger data-testid='transacciones-menu'>
+        Transacciones
+      </CollapsibleTrigger>
 
       <CollapsibleContent>
         <SidebarMenuSub>
           <SidebarMenuSubItem>
-            <Link to='/transacciones/presupuestos'>Presupuesto</Link>
+            <Link
+              to='/transacciones/presupuestos'
+              data-testid='transacciones-menu-presupuesto'
+            >
+              Presupuesto
+            </Link>
           </SidebarMenuSubItem>
           <SidebarMenuSubItem>
-            <Link to='/transacciones/facturas'>Facturas</Link>
+            <Link
+              to='/transacciones/facturas'
+              data-testid='transacciones-menu-facturas'
+            >
+              Facturas
+            </Link>
           </SidebarMenuSubItem>
           <SidebarMenuSubItem>
-            <Link to='/transacciones/cierre-mensual'>Cierre Mensual</Link>
+            <Link
+              to='/transacciones/cierre-mensual'
+              data-testid='transacciones-menu-cierre'
+            >
+              Cierre Mensual
+            </Link>
           </SidebarMenuSubItem>
         </SidebarMenuSub>
       </CollapsibleContent>
