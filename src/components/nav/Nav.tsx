@@ -4,9 +4,9 @@ import {
   SidebarHeader,
   SidebarMenu,
 } from '@/components/ui/sidebar'
+import ParametrosMenu from './parametros/menu'
 import ReportesMenu from './reportes/menu'
 import TransaccionesMenu from './transacciones/menu'
-import ParametrosMenu from './parametros/menu'
 
 export default function Nav() {
   return (
