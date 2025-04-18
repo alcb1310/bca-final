@@ -1,16 +1,11 @@
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '../ui/collapsible'
-import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuSub,
-  SidebarMenuSubItem,
-} from '../ui/sidebar'
+} from '@/components/ui/sidebar'
+import ReportesMenu from './reportes/menu'
+import TransaccionesMenu from './transacciones/menu'
 
 export default function Nav() {
   return (
@@ -18,25 +13,8 @@ export default function Nav() {
       <SidebarHeader>BCA</SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
-          <Collapsible defaultOpen className='group/collapsible'>
-            <CollapsibleTrigger>Transacciones</CollapsibleTrigger>
-
-            <CollapsibleContent>
-              <SidebarMenuSub>
-                <SidebarMenuSubItem>Presupuesto</SidebarMenuSubItem>
-              </SidebarMenuSub>
-            </CollapsibleContent>
-          </Collapsible>
-
-          <Collapsible defaultOpen className='group/collapsible'>
-            <CollapsibleTrigger>Reportes</CollapsibleTrigger>
-
-            <CollapsibleContent>
-              <SidebarMenuSub>
-                <SidebarMenuSubItem>Actual</SidebarMenuSubItem>
-              </SidebarMenuSub>
-            </CollapsibleContent>
-          </Collapsible>
+          <TransaccionesMenu />
+          <ReportesMenu />
         </SidebarMenu>
       </SidebarContent>
     </Sidebar>
