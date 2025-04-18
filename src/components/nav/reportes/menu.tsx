@@ -13,6 +13,9 @@ export default function ReportesMenu() {
       <CollapsibleContent>
         <SidebarMenuSub>
           <SidebarMenuSubItem>Actual</SidebarMenuSubItem>
+          <SidebarMenuSubItem>Cuadre</SidebarMenuSubItem>
+          <SidebarMenuSubItem>Gastado por Partida</SidebarMenuSubItem>
+          <SidebarMenuSubItem>Historico</SidebarMenuSubItem>
         </SidebarMenuSub>
       </CollapsibleContent>
     </Collapsible>

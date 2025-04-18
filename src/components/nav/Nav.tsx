@@ -6,6 +6,7 @@ import {
 } from '@/components/ui/sidebar'
 import ReportesMenu from './reportes/menu'
 import TransaccionesMenu from './transacciones/menu'
+import ParametrosMenu from './parametros/menu'
 
 export default function Nav() {
   return (
@@ -15,6 +16,7 @@ export default function Nav() {
         <SidebarMenu>
           <TransaccionesMenu />
           <ReportesMenu />
+          <ParametrosMenu />
         </SidebarMenu>
       </SidebarContent>
     </Sidebar>
