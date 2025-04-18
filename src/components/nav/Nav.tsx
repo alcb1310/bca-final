@@ -8,11 +8,16 @@ import {
 import ParametrosMenu from './parametros/menu'
 import ReportesMenu from './reportes/menu'
 import TransaccionesMenu from './transacciones/menu'
+import { Link } from '@tanstack/react-router'
 
 export default function Nav() {
   return (
     <Sidebar>
-      <SidebarHeader>BCA</SidebarHeader>
+      <SidebarHeader className='flex justify-center items-center my-2'>
+        <Link to='/'>
+          <img src='/favicon.ico' alt='logo' className='w-12 h-12' />
+        </Link>
+      </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
           <TransaccionesMenu />
