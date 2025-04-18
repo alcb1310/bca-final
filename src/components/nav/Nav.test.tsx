@@ -1,6 +1,8 @@
 import TestProvider from '@/__mocks__/provider'
 import { render, screen } from '@testing-library/react'
 import Nav from './Nav'
+import { SidebarProvider } from '../ui/sidebar'
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: vitest.fn().mockImplementation((query) => ({
@@ -14,10 +16,17 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: vitest.fn(),
   })),
 })
+function TestNav() {
+  return (
+    <SidebarProvider>
+      <Nav />
+    </SidebarProvider>
+  )
+}
 
 describe('Nav', () => {
   beforeEach(() => {
-    render(<TestProvider component={Nav} />)
+    render(<TestProvider component={TestNav} />)
   })
 
   it('should render the transacciones menu', () => {
@@ -39,5 +48,31 @@ describe('Nav', () => {
     expect(cierre).toBeInTheDocument()
     expect(cierre).toHaveTextContent(/cierre mensual/i)
     expect(cierre).toHaveAttribute('href', '/transacciones/cierre-mensual')
+  })
+
+  it('should render the reportes menu', () => {
+    const reportes = screen.getByTestId('reportes-menu')
+    expect(reportes).toBeInTheDocument()
+    expect(reportes).toHaveTextContent(/reportes/i)
+
+    const actual = screen.getByTestId('reportes-menu-actual')
+    expect(actual).toBeInTheDocument()
+    expect(actual).toHaveTextContent(/actual/i)
+    expect(actual).toHaveAttribute('href', '/reportes/actual')
+
+    const cuadre = screen.getByTestId('reportes-menu-cuadre')
+    expect(cuadre).toBeInTheDocument()
+    expect(cuadre).toHaveTextContent(/cuadre/i)
+    expect(cuadre).toHaveAttribute('href', '/reportes/cuadre')
+
+    const gastado = screen.getByTestId('reportes-menu-gastado')
+    expect(gastado).toBeInTheDocument()
+    expect(gastado).toHaveTextContent(/gastado por partida/i)
+    expect(gastado).toHaveAttribute('href', '/reportes/gastado-por-partida')
+
+    const historico = screen.getByTestId('reportes-menu-historico')
+    expect(historico).toBeInTheDocument()
+    expect(historico).toHaveTextContent(/historico/i)
+    expect(historico).toHaveAttribute('href', '/reportes/historico')
   })
 })

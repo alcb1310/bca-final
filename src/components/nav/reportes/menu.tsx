@@ -9,21 +9,37 @@ import { Link } from '@tanstack/react-router'
 export default function ReportesMenu() {
   return (
     <Collapsible defaultOpen className='group/collapsible'>
-      <CollapsibleTrigger>Reportes</CollapsibleTrigger>
+      <CollapsibleTrigger data-testid='reportes-menu'>
+        Reportes
+      </CollapsibleTrigger>
 
       <CollapsibleContent>
         <SidebarMenuSub>
           <SidebarMenuSubItem>
-            <Link to='/reportes/actual'>Actual</Link>
+            <Link to='/reportes/actual' data-testid='reportes-menu-actual'>
+              Actual
+            </Link>
           </SidebarMenuSubItem>
           <SidebarMenuSubItem>
-            <Link to='/reportes/cuadre'>Cuadre</Link>
+            <Link to='/reportes/cuadre' data-testid='reportes-menu-cuadre'>
+              Cuadre
+            </Link>
           </SidebarMenuSubItem>
           <SidebarMenuSubItem>
-            <Link to='/reportes/gastado-por-partida'>Gastado por Partida</Link>
+            <Link
+              to='/reportes/gastado-por-partida'
+              data-testid='reportes-menu-gastado'
+            >
+              Gastado por Partida
+            </Link>
           </SidebarMenuSubItem>
           <SidebarMenuSubItem>
-            <Link to='/reportes/historico'>Historico</Link>
+            <Link
+              to='/reportes/historico'
+              data-testid='reportes-menu-historico'
+            >
+              Historico
+            </Link>
           </SidebarMenuSubItem>
         </SidebarMenuSub>
       </CollapsibleContent>
