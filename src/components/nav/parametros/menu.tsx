@@ -9,27 +9,56 @@ import { Link } from '@tanstack/react-router'
 export default function ParametrosMenu() {
   return (
     <Collapsible defaultOpen className='group/collapsible'>
-      <CollapsibleTrigger>Parametros</CollapsibleTrigger>
+      <CollapsibleTrigger data-testid='parametros-menu'>
+        Parametros
+      </CollapsibleTrigger>
 
       <CollapsibleContent>
         <SidebarMenuSub>
           <SidebarMenuSubItem>
-            <Link to='/parametros/categorias'>Categorias</Link>
+            <Link
+              to='/parametros/categorias'
+              data-testid='parametros-menu-categorias'
+            >
+              Categorias
+            </Link>
           </SidebarMenuSubItem>
           <SidebarMenuSubItem>
-            <Link to='/parametros/materiales'>Materiales</Link>
+            <Link
+              to='/parametros/materiales'
+              data-testid='parametros-menu-materiales'
+            >
+              Materiales
+            </Link>
           </SidebarMenuSubItem>
           <SidebarMenuSubItem>
-            <Link to='/parametros/partidas'>Partidas</Link>
+            <Link
+              to='/parametros/partidas'
+              data-testid='parametros-menu-partidas'
+            >
+              Partidas
+            </Link>
           </SidebarMenuSubItem>
           <SidebarMenuSubItem>
-            <Link to='/parametros/proyectos'>Proyectos</Link>
+            <Link
+              to='/parametros/proyectos'
+              data-testid='parametros-menu-proyectos'
+            >
+              Proyectos
+            </Link>
           </SidebarMenuSubItem>
           <SidebarMenuSubItem>
-            <Link to='/parametros/proveedores'>Proveedores</Link>
+            <Link
+              to='/parametros/proveedores'
+              data-testid='parametros-menu-proveedores'
+            >
+              Proveedores
+            </Link>
           </SidebarMenuSubItem>
           <SidebarMenuSubItem>
-            <Link to='/parametros/rubros'>Rubros</Link>
+            <Link to='/parametros/rubros' data-testid='parametros-menu-rubros'>
+              Rubros
+            </Link>
           </SidebarMenuSubItem>
         </SidebarMenuSub>
       </CollapsibleContent>

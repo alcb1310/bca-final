@@ -1,7 +1,7 @@
 import TestProvider from '@/__mocks__/provider'
+import { SidebarProvider } from '@/components/ui/sidebar'
 import { render, screen } from '@testing-library/react'
 import Nav from './Nav'
-import { SidebarProvider } from '../ui/sidebar'
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -74,5 +74,41 @@ describe('Nav', () => {
     expect(historico).toBeInTheDocument()
     expect(historico).toHaveTextContent(/historico/i)
     expect(historico).toHaveAttribute('href', '/reportes/historico')
+  })
+
+  it('should render the parametros menu', () => {
+    const parametros = screen.getByTestId('parametros-menu')
+    expect(parametros).toBeInTheDocument()
+    expect(parametros).toHaveTextContent(/parametros/i)
+
+    const categorias = screen.getByTestId('parametros-menu-categorias')
+    expect(categorias).toBeInTheDocument()
+    expect(categorias).toHaveTextContent(/categorias/i)
+    expect(categorias).toHaveAttribute('href', '/parametros/categorias')
+
+    const materiales = screen.getByTestId('parametros-menu-materiales')
+    expect(materiales).toBeInTheDocument()
+    expect(materiales).toHaveTextContent(/materiales/i)
+    expect(materiales).toHaveAttribute('href', '/parametros/materiales')
+
+    const partidas = screen.getByTestId('parametros-menu-partidas')
+    expect(partidas).toBeInTheDocument()
+    expect(partidas).toHaveTextContent(/partidas/i)
+    expect(partidas).toHaveAttribute('href', '/parametros/partidas')
+
+    const proyectos = screen.getByTestId('parametros-menu-proyectos')
+    expect(proyectos).toBeInTheDocument()
+    expect(proyectos).toHaveTextContent(/proyectos/i)
+    expect(proyectos).toHaveAttribute('href', '/parametros/proyectos')
+
+    const proveedores = screen.getByTestId('parametros-menu-proveedores')
+    expect(proveedores).toBeInTheDocument()
+    expect(proveedores).toHaveTextContent(/proveedores/i)
+    expect(proveedores).toHaveAttribute('href', '/parametros/proveedores')
+
+    const rubros = screen.getByTestId('parametros-menu-rubros')
+    expect(rubros).toBeInTheDocument()
+    expect(rubros).toHaveTextContent(/rubros/i)
+    expect(rubros).toHaveAttribute('href', '/parametros/rubros')
   })
 })
