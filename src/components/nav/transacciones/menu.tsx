@@ -4,6 +4,7 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
 import { SidebarMenuSub, SidebarMenuSubItem } from '@/components/ui/sidebar'
+import { Link } from '@tanstack/react-router'
 
 export default function TransaccionesMenu() {
   return (
@@ -12,9 +13,15 @@ export default function TransaccionesMenu() {
 
       <CollapsibleContent>
         <SidebarMenuSub>
-          <SidebarMenuSubItem>Presupuesto</SidebarMenuSubItem>
-          <SidebarMenuSubItem>Facturas</SidebarMenuSubItem>
-          <SidebarMenuSubItem>Cierre Mensual</SidebarMenuSubItem>
+          <SidebarMenuSubItem>
+            <Link to='/transacciones/presupuestos'>Presupuesto</Link>
+          </SidebarMenuSubItem>
+          <SidebarMenuSubItem>
+            <Link to='/transacciones/facturas'>Facturas</Link>
+          </SidebarMenuSubItem>
+          <SidebarMenuSubItem>
+            <Link to='/transacciones/cierre-mensual'>Cierre Mensual</Link>
+          </SidebarMenuSubItem>
         </SidebarMenuSub>
       </CollapsibleContent>
     </Collapsible>
