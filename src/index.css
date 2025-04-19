@@ -40,6 +40,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-success: var(--success);
+  --color-warning: var(--warning);
 }
 
 :root {
@@ -76,6 +77,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --success: oklch(0.59 0.1863 144.72);
+  --warning: oklch(0.67 0.1267 93.9);
 }
 
 .dark {
@@ -111,6 +113,7 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
   --success: oklch(0.7 0.2212 144.72);
+  --warning: oklch(0.88 0.1787 93.9);
 }
 
 @layer base {
