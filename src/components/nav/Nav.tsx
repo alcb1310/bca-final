@@ -5,10 +5,10 @@ import {
   SidebarHeader,
   SidebarMenu,
 } from '@/components/ui/sidebar'
+import { Link } from '@tanstack/react-router'
 import ParametrosMenu from './parametros/menu'
 import ReportesMenu from './reportes/menu'
 import TransaccionesMenu from './transacciones/menu'
-import { Link } from '@tanstack/react-router'
 
 export default function Nav() {
   return (
