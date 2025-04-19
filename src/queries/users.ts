@@ -38,3 +38,19 @@ export async function getAllUsers({ token }: { token: string }) {
 
   return (await response.json()) as UserResponseType[]
 }
+
+export async function deleteUser({ token, id }: { token: string; id: string }) {
+  const response = await fetch(`${url}/users/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error('Error al eliminar el usuario')
+  }
+
+  return
+}
