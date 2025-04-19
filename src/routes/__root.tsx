@@ -1,3 +1,4 @@
+import { Toaster } from '@/components/ui/sonner'
 import type { AuthContext } from '@/utils/auth'
 import type { QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -17,6 +18,7 @@ function RootComponent() {
       <Outlet />
       <TanStackRouterDevtools />
       <ReactQueryDevtools />
+      <Toaster />
     </div>
   )
 }
