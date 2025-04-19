@@ -23,6 +23,8 @@ export const Route = createFileRoute('/_auth/')({
       user,
     }
   },
+  beforeLoad: () => getMe,
+  pendingComponent: () => <div>Loading...</div>,
 })
 
 function RouteComponent() {
@@ -36,7 +38,7 @@ function RouteComponent() {
 
   return (
     <div>
-      <Greet name={user?.name} />
+      <Greet name={user.name} />
     </div>
   )
 }
