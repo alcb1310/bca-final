@@ -1,3 +1,7 @@
+import EditDialog from '@/components/dialogs/user/EditDialog'
+import NewDialog from '@/components/dialogs/user/NewDialog'
+import UserAlert from '@/components/dialogs/user/UserAlert'
+import PageTitle from '@/components/titles/PageTitle'
 import { DataTable } from '@/components/ui/DataTable'
 import {
   AlertDialog,
@@ -11,17 +15,19 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import { deleteUser, getAllUsers } from '@/queries/users'
 import type { UserResponseType } from '@/types/users'
-import {
-  type QueryClient,
-  useMutation,
-  useSuspenseQuery,
-} from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Pencil, Trash } from 'lucide-react'
-import { toast } from 'sonner'
 
 export const Route = createFileRoute('/_auth/usuarios/admin')({
   component: RouteComponent,
@@ -70,14 +76,12 @@ function RouteComponent() {
       cell: ({ row: { original } }) => {
         return (
           <div className='flex items-center justify-center gap-2'>
-            <Pencil
-              size={12}
-              className='text-warning cursor-pointer'
-              onClick={() => {
-                console.log(original.id)
-              }}
+            <EditDialog user={original} />
+            <UserAlert
+              user={original}
+              queryClient={queryClient}
+              token={token}
             />
-            <Alert user={original} queryClient={queryClient} token={token} />
           </div>
         )
       },
@@ -86,55 +90,13 @@ function RouteComponent() {
 
   return (
     <div>
+      <PageTitle title='Usuarios' />
+
+      <div>
+        <NewDialog />
+      </div>
+
       <DataTable data={users} columns={columns} />
     </div>
-  )
-}
-
-function Alert({
-  user,
-  queryClient,
-  token,
-}: Readonly<{
-  user: UserResponseType
-  queryClient: QueryClient
-  token: string
-}>) {
-  const { mutate } = useMutation({
-    mutationFn: deleteUser,
-    mutationKey: ['users'],
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['users'] })
-      toast('Usuario eliminado')
-    },
-    onError: () => {
-      toast('Error al eliminar el usuario')
-    },
-  })
-
-  return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant='ghost' size='icon'>
-          <Trash size={12} className='text-destructive' />
-        </Button>
-      </AlertDialogTrigger>
-
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Esta seguro?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Esta seguro de querer eliminar al usuario {user.name}. Esta accion
-            no se puede deshacer
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => mutate({ token, id: user.id })}>
-            Eliminar
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
   )
 }
