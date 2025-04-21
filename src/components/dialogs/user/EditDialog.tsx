@@ -9,21 +9,47 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useAppForm } from '@/hooks/bca.form'
-import type { UserResponseType } from '@/types/users'
+import { updateUser } from '@/queries/users'
+import { UserResponseShema, type UserResponseType } from '@/types/users'
+import { type QueryClient, useMutation } from '@tanstack/react-query'
 import { Pencil } from 'lucide-react'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 export default function EditDialog({
+  token,
   user,
-}: Readonly<{ user: UserResponseType }>) {
+  queryClient,
+}: Readonly<{
+  token: string
+  user: UserResponseType
+  queryClient: QueryClient
+}>) {
+  const [open, setOpen] = useState(false)
   const userForm = useAppForm({
     defaultValues: user,
     onSubmit: ({ value }) => {
-      console.log(value)
+      mutate({ token, id: value.id, user: value })
+    },
+    validators: {
+      onSubmit: UserResponseShema,
+    },
+  })
+
+  const { mutate, error, isError } = useMutation({
+    mutationFn: updateUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] })
+      toast('Usuario actualizado')
+      setOpen(false)
+    },
+    onError: () => {
+      toast('Error al actualizar el usuario')
     },
   })
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant='ghost' size='icon'>
           <Pencil
@@ -47,6 +73,10 @@ export default function EditDialog({
               userForm.handleSubmit()
             }}
           >
+            {isError && userForm.state.isTouched && (
+              <p className='text-destructive'>{error?.message}</p>
+            )}
+
             <div className='mb-4 flex flex-col gap-4'>
               <userForm.AppField name='email'>
                 {(field) => <field.TextField label='Email' />}
@@ -58,7 +88,7 @@ export default function EditDialog({
             </div>
 
             <DialogFooter>
-              <DialogClose>
+              <DialogClose asChild>
                 <Button type='button' variant='secondary'>
                   Cerrar
                 </Button>
