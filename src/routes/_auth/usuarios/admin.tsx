@@ -73,7 +73,7 @@ function RouteComponent() {
       <PageTitle title='Usuarios' />
 
       <div className='mb-4'>
-        <NewDialog />
+        <NewDialog token={token} queryClient={queryClient} />
       </div>
 
       <DataTable data={users} columns={columns} />
