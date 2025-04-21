@@ -1,4 +1,4 @@
-import type { UserResponseType } from '@/types/users'
+import type { UserCreateType, UserResponseType } from '@/types/users'
 
 const url = import.meta.env.VITE_SERVER_URL
 if (!url) {
@@ -53,4 +53,25 @@ export async function deleteUser({ token, id }: { token: string; id: string }) {
   }
 
   return
+}
+
+export async function addUser({
+  token,
+  user,
+}: Readonly<{ token: string; user: UserCreateType }>) {
+  const response = await fetch(`${url}/users`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(user),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.error)
+  }
+
+  return (await response.json()) as UserResponseType
 }
