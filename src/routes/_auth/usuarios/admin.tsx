@@ -3,27 +3,7 @@ import NewDialog from '@/components/dialogs/user/NewDialog'
 import UserAlert from '@/components/dialogs/user/UserAlert'
 import PageTitle from '@/components/titles/PageTitle'
 import { DataTable } from '@/components/ui/DataTable'
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
-import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
-import { deleteUser, getAllUsers } from '@/queries/users'
+import { getAllUsers } from '@/queries/users'
 import type { UserResponseType } from '@/types/users'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, redirect } from '@tanstack/react-router'
@@ -92,7 +72,7 @@ function RouteComponent() {
     <div>
       <PageTitle title='Usuarios' />
 
-      <div>
+      <div className='mb-4'>
         <NewDialog />
       </div>
 
