@@ -75,3 +75,25 @@ export async function addUser({
 
   return (await response.json()) as UserResponseType
 }
+
+export async function updateUser({
+  token,
+  id,
+  user,
+}: Readonly<{ token: string; id: string; user: UserResponseType }>) {
+  const response = await fetch(`${url}/users/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(user),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.error)
+  }
+
+  return (await response.json()) as UserResponseType
+}
