@@ -41,7 +41,7 @@ function RouteComponent() {
       cell: ({ row }) => {
         return (
           <span className='block text-right '>
-            {row.original.gross_area.toLocaleString('es-EC', {
+            {row.original.net_area.toLocaleString('es-EC', {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })}
