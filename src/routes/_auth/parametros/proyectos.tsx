@@ -1,5 +1,7 @@
+import EditProject from '@/components/dialogs/parametros/proyectos/EditProject'
 import PageTitle from '@/components/titles/PageTitle'
 import { DataTable } from '@/components/ui/DataTable'
+import { Switch } from '@/components/ui/switch'
 import { getAllProjects } from '@/queries/settings/projects'
 import type { ProjectResponseType } from '@/types/settings/projects'
 import { useSuspenseQuery } from '@tanstack/react-query'
@@ -59,6 +61,26 @@ function RouteComponent() {
             })}
           </span>
         )
+      },
+    },
+    {
+      header: () => <div className='font-bold text-center'>Activo</div>,
+      accessorKey: 'is_active',
+      cell: ({ row }) => {
+        return (
+          <div className='flex items-center justify-center'>
+            <Switch checked={row.original.is_active} disabled />
+          </div>
+        )
+      },
+    },
+    {
+      id: 'actions',
+      size: 50,
+      enableSorting: false,
+      enableHiding: false,
+      cell: ({ row: { original } }) => {
+        return <EditProject project={original} />
       },
     },
   ]
