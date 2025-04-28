@@ -20,3 +20,24 @@ export async function getAllProjects({ token }: Readonly<{ token: string }>) {
 
   return (await response.json()) as ProjectResponseType[]
 }
+
+export async function updateProject({
+  token,
+  project,
+}: Readonly<{ token: string; project: ProjectResponseType }>) {
+  const response = await fetch(`${url}/parametros/proyectos/${project.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(project),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.error)
+  }
+
+  return (await response.json()) as ProjectResponseType
+}
