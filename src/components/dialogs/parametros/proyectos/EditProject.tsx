@@ -10,19 +10,39 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useAppForm } from '@/hooks/bca.form'
+import { updateProject } from '@/queries/settings/projects'
 import {
   ProjectResponseSchema,
   type ProjectResponseType,
 } from '@/types/settings/projects'
+import { useAuth } from '@/utils/auth'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Pencil } from 'lucide-react'
+import { toast } from 'sonner'
 
 export default function EditProject({
   project,
 }: Readonly<{ project: ProjectResponseType }>) {
+  const { token } = useAuth()
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: updateProject,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] })
+      toast('Proyecto actualizado')
+    },
+    onError: () => {
+      toast('Error al actualizar el proyecto')
+    },
+  })
   const projectForm = useAppForm({
     defaultValues: project,
     onSubmit: ({ value }) => {
-      console.log(value)
+      if (!token) throw new Error('No token')
+      mutate({
+        token,
+        project: value,
+      })
     },
     validators: {
       onSubmit: ProjectResponseSchema,
