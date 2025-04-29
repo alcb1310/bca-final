@@ -11,16 +11,16 @@ import {
 import { useAppForm } from '@/hooks/bca.form'
 import { addUser } from '@/queries/users'
 import { UserCreateSchema } from '@/types/users'
-import { type QueryClient, useMutation } from '@tanstack/react-query'
+import { useAuth } from '@/utils/auth'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Plus } from 'lucide-react'
 import { type FormEvent, useState } from 'react'
 import { toast } from 'sonner'
 
-export default function NewDialog({
-  token,
-  queryClient,
-}: Readonly<{ token: string; queryClient: QueryClient }>) {
+export default function NewDialog() {
   const [open, setOpen] = useState(false)
+  const { token } = useAuth()
+  const queryClient = useQueryClient()
   const userForm = useAppForm({
     defaultValues: {
       email: '',
@@ -31,6 +31,7 @@ export default function NewDialog({
       onSubmit: UserCreateSchema,
     },
     onSubmit: ({ value }) => {
+      if (!token) throw new Error('No token found')
       mutate({ token, user: value })
     },
   })
