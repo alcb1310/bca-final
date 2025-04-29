@@ -56,11 +56,7 @@ function RouteComponent() {
       cell: ({ row: { original } }) => {
         return (
           <div className='flex items-center justify-center gap-2'>
-            <EditDialog
-              user={original}
-              token={token}
-              queryClient={queryClient}
-            />
+            <EditDialog user={original} />
             <UserAlert
               user={original}
               queryClient={queryClient}

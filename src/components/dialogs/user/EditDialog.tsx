@@ -11,24 +11,24 @@ import {
 import { useAppForm } from '@/hooks/bca.form'
 import { updateUser } from '@/queries/users'
 import { UserResponseShema, type UserResponseType } from '@/types/users'
-import { type QueryClient, useMutation } from '@tanstack/react-query'
+import { useAuth } from '@/utils/auth'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Pencil } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
 export default function EditDialog({
-  token,
   user,
-  queryClient,
 }: Readonly<{
-  token: string
   user: UserResponseType
-  queryClient: QueryClient
 }>) {
   const [open, setOpen] = useState(false)
+  const { token } = useAuth()
+  const queryClient = useQueryClient()
   const userForm = useAppForm({
     defaultValues: user,
     onSubmit: ({ value }) => {
+      if (!token) throw new Error('No token found')
       mutate({ token, id: value.id, user: value })
     },
     validators: {
