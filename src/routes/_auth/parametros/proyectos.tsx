@@ -1,3 +1,4 @@
+import AddProject from '@/components/dialogs/parametros/proyectos/AddProject'
 import EditProject from '@/components/dialogs/parametros/proyectos/EditProject'
 import PageTitle from '@/components/titles/PageTitle'
 import { DataTable } from '@/components/ui/DataTable'
@@ -88,6 +89,10 @@ function RouteComponent() {
   return (
     <div>
       <PageTitle title='Proyectos' />
+      <div className='mb-4'>
+        <AddProject />
+      </div>
+
       <DataTable data={data} columns={columns} />
     </div>
   )
