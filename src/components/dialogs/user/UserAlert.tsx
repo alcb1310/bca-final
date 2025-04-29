@@ -12,19 +12,18 @@ import {
 import { Button } from '@/components/ui/button'
 import { deleteUser } from '@/queries/users'
 import type { UserResponseType } from '@/types/users'
-import { type QueryClient, useMutation } from '@tanstack/react-query'
+import { useAuth } from '@/utils/auth'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Trash } from 'lucide-react'
 import { toast } from 'sonner'
 
 export default function UserAlert({
   user,
-  queryClient,
-  token,
 }: Readonly<{
   user: UserResponseType
-  queryClient: QueryClient
-  token: string
 }>) {
+  const { token } = useAuth()
+  const queryClient = useQueryClient()
   const { mutate } = useMutation({
     mutationFn: deleteUser,
     mutationKey: ['users'],
@@ -55,7 +54,12 @@ export default function UserAlert({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => mutate({ token, id: user.id })}>
+          <AlertDialogAction
+            onClick={() => {
+              if (!token) throw new Error('No token found')
+              mutate({ token, id: user.id })
+            }}
+          >
             Eliminar
           </AlertDialogAction>
         </AlertDialogFooter>
