@@ -52,7 +52,7 @@ export default function AddProject() {
         <Button
           variant='ghost'
           size='sm'
-          className='flex items-center justify-center gap-4 uppercase tracking-wide'
+          className='flex items-center justify-center gap-4 uppercase tracking-wide cursor-pointer'
           onClick={() => projectForm.reset()}
         >
           <Plus size={16} />
