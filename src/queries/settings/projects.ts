@@ -1,4 +1,7 @@
-import type { ProjectResponseType } from '@/types/settings/projects'
+import type {
+  ProjectCreateType,
+  ProjectResponseType,
+} from '@/types/settings/projects'
 
 const url = import.meta.env.VITE_SERVER_URL
 
@@ -27,6 +30,27 @@ export async function updateProject({
 }: Readonly<{ token: string; project: ProjectResponseType }>) {
   const response = await fetch(`${url}/parametros/proyectos/${project.id}`, {
     method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(project),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.error)
+  }
+
+  return (await response.json()) as ProjectResponseType
+}
+
+export async function createProject({
+  token,
+  project,
+}: Readonly<{ token: string; project: ProjectCreateType }>) {
+  const response = await fetch(`${url}/parametros/proyectos`, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
