@@ -52,8 +52,13 @@ export default function EditProject({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant='ghost' size='icon' onClick={() => projectForm.reset()}>
-          <Pencil className='text-warning' />
+        <Button
+          variant='ghost'
+          size='icon'
+          onClick={() => projectForm.reset()}
+          className='text-warning cursor-pointer'
+        >
+          <Pencil size={12} />
         </Button>
       </DialogTrigger>
       <DialogContent>
