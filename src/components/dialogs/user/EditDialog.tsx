@@ -51,14 +51,13 @@ export default function EditDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant='ghost' size='icon'>
-          <Pencil
-            size={12}
-            className='text-warning cursor-pointer'
-            onClick={() => {
-              console.log(user.id)
-            }}
-          />
+        <Button
+          variant='ghost'
+          size='icon'
+          onClick={() => userForm.reset()}
+          className='text-warning cursor-pointer'
+        >
+          <Pencil size={12} />
         </Button>
       </DialogTrigger>
 
