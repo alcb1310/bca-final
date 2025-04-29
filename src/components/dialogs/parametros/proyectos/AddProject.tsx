@@ -9,10 +9,27 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useAppForm } from '@/hooks/bca.form'
+import { createProject } from '@/queries/settings/projects'
 import { ProjectCreateSchema } from '@/types/settings/projects'
+import { useAuth } from '@/utils/auth'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Plus } from 'lucide-react'
+import { toast } from 'sonner'
 
 export default function AddProject() {
+  const { token } = useAuth()
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: createProject,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] })
+      toast('Proyecto creado')
+    },
+    onError: (error) => {
+      toast(`Error al crear el proyecto: ${error.message}`)
+    },
+  })
+
   const projectForm = useAppForm({
     defaultValues: {
       name: '',
@@ -24,7 +41,8 @@ export default function AddProject() {
       onSubmit: ProjectCreateSchema,
     },
     onSubmit: ({ value }) => {
-      console.log(value)
+      if (!token) throw new Error('No token')
+      mutate({ token, project: value })
     },
   })
 
@@ -81,13 +99,13 @@ export default function AddProject() {
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant={'secondary'}>Cerrar</Button>
+                <projectForm.AppForm>
+                  <projectForm.SubscribeButton
+                    label='Grabar'
+                    className='w-fit font-bold'
+                  />
+                </projectForm.AppForm>
               </DialogClose>
-              <projectForm.AppForm>
-                <projectForm.SubscribeButton
-                  label='Grabar'
-                  className='w-fit font-bold'
-                />
-              </projectForm.AppForm>
             </DialogFooter>
           </form>
         </DialogDescription>
