@@ -27,13 +27,12 @@ export const Route = createFileRoute('/_auth/usuarios/admin')({
     return {
       users,
       token,
-      queryClient: context.queryClient,
     }
   },
 })
 
 function RouteComponent() {
-  const { token, queryClient } = Route.useLoaderData()
+  const { token } = Route.useLoaderData()
   const { data: users } = useSuspenseQuery({
     queryKey: ['users'],
     queryFn: () => getAllUsers({ token }),
@@ -57,11 +56,7 @@ function RouteComponent() {
         return (
           <div className='flex items-center justify-center gap-2'>
             <EditDialog user={original} />
-            <UserAlert
-              user={original}
-              queryClient={queryClient}
-              token={token}
-            />
+            <UserAlert user={original} />
           </div>
         )
       },
