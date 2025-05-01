@@ -1,10 +1,10 @@
+import EditSupplier from '@/components/dialogs/parametros/proveedores/EditSupplier'
 import { DataTable } from '@/components/ui/DataTable'
 import getAllSuppliers from '@/queries/settings/suppliers'
 import type { SupplierResponseType } from '@/types/settings/suppliers'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Pencil } from 'lucide-react'
 
 export const Route = createFileRoute('/_auth/parametros/proveedores')({
   component: RouteComponent,
@@ -60,7 +60,7 @@ function RouteComponent() {
       enableSorting: false,
       enableHiding: false,
       cell: ({ row: { original } }) => {
-        return <Pencil className='text-warning' size={12} />
+        return <EditSupplier supplier={original} />
       },
     },
   ]
