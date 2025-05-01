@@ -9,7 +9,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -28,7 +27,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [pagination, setPagination] = useState({
     pageIndex: 0, // initial page index
-    pageSize: 10, // default page size
+    pageSize: 20, // default page size
   })
 
   const table = useReactTable({
@@ -85,39 +84,41 @@ export function DataTable<TData, TValue>({
               </TableCell>
             </TableRow>
           )}
-          <TableRow>
-            <TableCell colSpan={columns.length} className='text-right'>
-              <Button
-                onClick={() => table.firstPage()}
-                disabled={!table.getCanPreviousPage()}
-                size={'sm'}
-              >
-                {'<<'}
-              </Button>
-              <Button
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
-                size={'sm'}
-              >
-                {'<'}
-              </Button>
-              <Button
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
-                size={'sm'}
-              >
-                {'>'}
-              </Button>
-              <Button
-                onClick={() => table.lastPage()}
-                disabled={!table.getCanNextPage()}
-                size={'sm'}
-              >
-                {'>>'}
-              </Button>
+          {data.length > pagination.pageSize && (
 
-            </TableCell>
-          </TableRow>
+            <TableRow>
+              <TableCell colSpan={columns.length} className='text-right'>
+                <Button
+                  onClick={() => table.firstPage()}
+                  disabled={!table.getCanPreviousPage()}
+                  size={'sm'}
+                >
+                  {'<<'}
+                </Button>
+                <Button
+                  onClick={() => table.previousPage()}
+                  disabled={!table.getCanPreviousPage()}
+                  size={'sm'}
+                >
+                  {'<'}
+                </Button>
+                <Button
+                  onClick={() => table.nextPage()}
+                  disabled={!table.getCanNextPage()}
+                  size={'sm'}
+                >
+                  {'>'}
+                </Button>
+                <Button
+                  onClick={() => table.lastPage()}
+                  disabled={!table.getCanNextPage()}
+                  size={'sm'}
+                >
+                  {'>>'}
+                </Button>
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </div>
