@@ -29,24 +29,30 @@ function RouteComponent() {
   })
   const columns: ColumnDef<SupplierResponseType>[] = [
     {
-      header: () => <p className='font-bold text-center'>RUC</p>,
+      header: 'RUC',
       accessorKey: 'supplier_id',
     },
     {
-      header: () => <p className='font-bold text-center'>Nombre</p>,
+      header: 'Nombre',
       accessorKey: 'name',
     },
     {
-      header: () => <p className='font-bold text-center'>Nombre</p>,
-      accessorKey: 'contact_name.String',
-    },
-    {
-      header: () => <p className='font-bold text-center'>Telefono</p>,
-      accessorKey: 'contact_phone.String',
-    },
-    {
-      header: () => <p className='font-bold text-center'>Email</p>,
-      accessorKey: 'contact_email.String',
+      // TODO: Find a way to format this header cell
+      header: 'Contacto',
+      columns: [
+        {
+          header: 'Nombre',
+          accessorFn: (row) => row.contact_name.String,
+        },
+        {
+          header: 'Telefono',
+          accessorKey: 'contact_phone.String',
+        },
+        {
+          header: 'Email',
+          accessorKey: 'contact_email.String',
+        },
+      ],
     },
     {
       id: 'actions',
@@ -54,7 +60,6 @@ function RouteComponent() {
       enableSorting: false,
       enableHiding: false,
       cell: ({ row: { original } }) => {
-        console.log(original)
         return <Pencil className='text-warning' size={12} />
       },
     },
