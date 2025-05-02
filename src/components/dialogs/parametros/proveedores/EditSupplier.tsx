@@ -8,39 +8,56 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useAppForm } from '@/hooks/bca.form'
+import { editSupplier } from '@/queries/settings/suppliers'
 import {
   SupplierEditSchema,
   type SupplierResponseType,
 } from '@/types/settings/suppliers'
+import { useAuth } from '@/utils/auth'
 import { DialogTitle } from '@radix-ui/react-dialog'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Pencil } from 'lucide-react'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 export default function EditSupplier({
   supplier,
 }: Readonly<{ supplier: SupplierResponseType }>) {
+  const { token } = useAuth()
+  const [open, setOpen] = useState(false)
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: editSupplier,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['suppliers'] })
+      toast('Proveedor actualizado')
+      setOpen(false)
+    },
+    onError: (error) => {
+      toast(`Error al actualizar el proveedor: ${error.message}`)
+    },
+  })
+
   const supplierForm = useAppForm({
     defaultValues: {
       id: supplier.id,
       supplier_id: supplier.supplier_id,
       name: supplier.name,
-      contact_name: supplier.contact_name.Valid
-        ? supplier.contact_name.String
-        : '',
-      contact_email: supplier.contact_email.Valid
-        ? supplier.contact_email.String
-        : '',
-      contact_phone: supplier.contact_phone.Valid
-        ? supplier.contact_phone.String
-        : '',
+      contact_name: supplier.contact_name.String,
+      contact_email: supplier.contact_email.String,
+      contact_phone: supplier.contact_phone.String,
     },
     validators: {
       onSubmit: SupplierEditSchema,
     },
+    onSubmit: ({ value }) => {
+      if (!token) throw new Error('No token')
+      mutate({ token, supplier: value })
+    },
   })
 
-  console.log(supplier)
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <Button
           size='icon'
