@@ -55,7 +55,7 @@ export default function EditDialog({
           variant='ghost'
           size='icon'
           onClick={() => userForm.reset()}
-          className='text-warning cursor-pointer'
+          className='text-warning'
         >
           <Pencil size={12} />
         </Button>
