@@ -56,7 +56,7 @@ export default function EditProject({
           variant='ghost'
           size='icon'
           onClick={() => projectForm.reset()}
-          className='text-warning cursor-pointer'
+          className='text-warning'
         >
           <Pencil size={12} />
         </Button>
