@@ -1,4 +1,6 @@
+import AddSupplier from '@/components/dialogs/parametros/proveedores/AddSupplier'
 import EditSupplier from '@/components/dialogs/parametros/proveedores/EditSupplier'
+import PageTitle from '@/components/titles/PageTitle'
 import { DataTable } from '@/components/ui/DataTable'
 import { getAllSuppliers } from '@/queries/settings/suppliers'
 import type { SupplierResponseType } from '@/types/settings/suppliers'
@@ -67,6 +69,8 @@ function RouteComponent() {
 
   return (
     <div>
+      <PageTitle title='Proveedores' />
+      <AddSupplier />
       <DataTable data={data} columns={columns} />
     </div>
   )
