@@ -19,3 +19,14 @@ export const SupplierResponseSchema = z.object({
 })
 
 export type SupplierResponseType = z.infer<typeof SupplierResponseSchema>
+
+export const SupplierEditSchema = z.object({
+  id: z.string().uuid(),
+  supplier_id: z.string(),
+  name: z.string(),
+  contact_name: z.string(),
+  contact_email: z.string().email(),
+  contact_phone: z.string(),
+})
+
+export type SupplierEditType = z.infer<typeof SupplierEditSchema>

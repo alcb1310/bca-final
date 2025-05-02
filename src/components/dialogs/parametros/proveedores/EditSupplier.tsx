@@ -8,7 +8,10 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useAppForm } from '@/hooks/bca.form'
-import type { SupplierResponseType } from '@/types/settings/suppliers'
+import {
+  SupplierEditSchema,
+  type SupplierResponseType,
+} from '@/types/settings/suppliers'
 import { DialogTitle } from '@radix-ui/react-dialog'
 import { Pencil } from 'lucide-react'
 
@@ -29,6 +32,9 @@ export default function EditSupplier({
       contact_phone: supplier.contact_phone.Valid
         ? supplier.contact_phone.String
         : '',
+    },
+    validators: {
+      onSubmit: SupplierEditSchema,
     },
   })
 
