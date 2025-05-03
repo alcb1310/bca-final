@@ -30,3 +30,13 @@ export const SupplierEditSchema = z.object({
 })
 
 export type SupplierEditType = z.infer<typeof SupplierEditSchema>
+
+export const SupplierCreateSchema = z.object({
+  supplier_id: z.string(),
+  name: z.string(),
+  contact_name: z.string().min(0, { message: 'Ingrese un nombre valido' }),
+  contact_email: z.string().min(0, { message: 'Ingrese un email valido' }),
+  contact_phone: z.string().min(0, { message: 'Ingrese un telefono valido' }),
+})
+
+export type SupplierCreateType = z.infer<typeof SupplierCreateSchema>
