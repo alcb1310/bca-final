@@ -1,3 +1,4 @@
+import EditCategory from '@/components/dialogs/parametros/categorias/EditCategory'
 import PageTitle from '@/components/titles/PageTitle'
 import { DataTable } from '@/components/ui/DataTable'
 import { getAllCategories } from '@/queries/settings/categories'
@@ -5,7 +6,6 @@ import type { CategoriesResponseType } from '@/types/settings/categories'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Pencil } from 'lucide-react'
 
 export const Route = createFileRoute('/_auth/parametros/categorias')({
   component: RouteComponent,
@@ -40,8 +40,7 @@ function RouteComponent() {
       enableSorting: false,
       enableHiding: false,
       cell: ({ row }) => {
-        console.log(row.original)
-        return <Pencil size={12} className='text-warning' />
+        return <EditCategory category={row.original} />
       },
     },
   ]
