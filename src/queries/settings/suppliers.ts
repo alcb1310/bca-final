@@ -1,4 +1,5 @@
 import type {
+  SupplierCreateType,
   SupplierEditType,
   SupplierResponseType,
 } from '@/types/settings/suppliers'
@@ -38,6 +39,27 @@ export async function editSupplier({
       body: JSON.stringify(supplier),
     },
   )
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.error)
+  }
+
+  return (await response.json()) as SupplierResponseType
+}
+
+export async function createSupplier({
+  token,
+  supplier,
+}: Readonly<{ token: string; supplier: SupplierCreateType }>) {
+  const response = await fetch(`${server}/parametros/proveedores`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(supplier),
+  })
 
   if (!response.ok) {
     const error = await response.json()
