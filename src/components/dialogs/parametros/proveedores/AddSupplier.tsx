@@ -9,10 +9,29 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useAppForm } from '@/hooks/bca.form'
+import { createSupplier } from '@/queries/settings/suppliers'
 import { SupplierCreateSchema } from '@/types/settings/suppliers'
+import { useAuth } from '@/utils/auth'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Plus } from 'lucide-react'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 export default function AddSupplier() {
+  const [open, setOpen] = useState(false)
+  const { token } = useAuth()
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: createSupplier,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['suppliers'] })
+      toast('Proveedor creado')
+      setOpen(false)
+    },
+    onError: (error) => {
+      toast(`Error al crear el proveedor: ${error.message}`)
+    },
+  })
   const supplierForm = useAppForm({
     defaultValues: {
       supplier_id: '',
@@ -24,12 +43,23 @@ export default function AddSupplier() {
     validators: {
       onSubmit: SupplierCreateSchema,
     },
+    onSubmit: ({ value }) => {
+      console.log('submittig', value)
+      if (!token) throw new Error('No token')
+      mutate({ token, supplier: value })
+    },
   })
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant='ghost' className='mb-4'>
+        <Button
+          variant='ghost'
+          className='mb-4'
+          onClick={() => {
+            supplierForm.reset()
+          }}
+        >
           <Plus />
           Crear proveedor
         </Button>
@@ -42,6 +72,8 @@ export default function AddSupplier() {
             onSubmit={(e) => {
               e.preventDefault()
               e.stopPropagation()
+
+              supplierForm.handleSubmit()
             }}
           >
             <div className='flex flex-col gap-4 mb-4'>
