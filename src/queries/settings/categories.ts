@@ -19,3 +19,24 @@ export async function getAllCategories({ token }: Readonly<{ token: string }>) {
 
   return (await response.json()) as CategoriesResponseType[]
 }
+
+export async function updateCategory({
+  token,
+  category,
+}: Readonly<{ token: string; category: CategoriesResponseType }>) {
+  const response = await fetch(`${url}/parametros/categorias/${category.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(category),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.error)
+  }
+
+  return
+}
