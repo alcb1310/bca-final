@@ -1,12 +1,12 @@
 import EditMaterial from '@/components/dialogs/parametros/materiales/EditMaterial'
 import PageTitle from '@/components/titles/PageTitle'
 import { DataTable } from '@/components/ui/DataTable'
+import { getAllCategories } from '@/queries/settings/categories'
 import getAllMaterials from '@/queries/settings/materials'
 import type { MaterialsResponseType } from '@/types/settings/materials'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Pencil } from 'lucide-react'
 
 export const Route = createFileRoute('/_auth/parametros/materiales')({
   component: RouteComponent,
@@ -14,10 +14,16 @@ export const Route = createFileRoute('/_auth/parametros/materiales')({
     const token = auth.token
     if (!token) throw redirect({ to: '/login' })
 
-    await queryClient.prefetchQuery({
-      queryKey: ['materials'],
-      queryFn: () => getAllMaterials({ token }),
-    })
+    await Promise.all([
+      queryClient.prefetchQuery({
+        queryKey: ['materials'],
+        queryFn: () => getAllMaterials({ token }),
+      }),
+      queryClient.prefetchQuery({
+        queryKey: ['categories'],
+        queryFn: () => getAllCategories({ token }),
+      }),
+    ])
 
     return { token }
   },
