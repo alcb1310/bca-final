@@ -1,3 +1,4 @@
+import AddCategory from '@/components/dialogs/parametros/categorias/AddCategory'
 import EditCategory from '@/components/dialogs/parametros/categorias/EditCategory'
 import PageTitle from '@/components/titles/PageTitle'
 import { DataTable } from '@/components/ui/DataTable'
@@ -48,6 +49,7 @@ function RouteComponent() {
   return (
     <div>
       <PageTitle title='Categorias' />
+      <AddCategory />
 
       <DataTable data={data} columns={columns} />
     </div>
