@@ -1,3 +1,4 @@
+import EditMaterial from '@/components/dialogs/parametros/materiales/EditMaterial'
 import PageTitle from '@/components/titles/PageTitle'
 import { DataTable } from '@/components/ui/DataTable'
 import getAllMaterials from '@/queries/settings/materials'
@@ -58,9 +59,7 @@ function RouteComponent() {
       enableSorting: false,
       enableHiding: false,
       cell: ({ row: { original } }) => {
-        console.log(original)
-        // TODO: Add edit material
-        return <Pencil className='text-warning' />
+        return <EditMaterial material={original} />
       },
     },
   ]
