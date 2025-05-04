@@ -40,3 +40,24 @@ export async function updateCategory({
 
   return
 }
+
+export async function createCategory({
+  token,
+  category,
+}: Readonly<{ token: string; category: { name: string } }>) {
+  const response = await fetch(`${url}/parametros/categorias`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(category),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.error)
+  }
+
+  return
+}
