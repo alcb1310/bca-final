@@ -9,27 +9,47 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useAppForm } from '@/hooks/bca.form'
+import { updateCategory } from '@/queries/settings/categories'
 import {
   CategoriesResponseSchema,
   type CategoriesResponseType,
 } from '@/types/settings/categories'
+import { useAuth } from '@/utils/auth'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Pencil } from 'lucide-react'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 export default function EditCategory({
   category,
 }: Readonly<{ category: CategoriesResponseType }>) {
+  const [open, setOpen] = useState(false)
+  const queryClient = useQueryClient()
+  const { token } = useAuth()
+  const { mutate } = useMutation({
+    mutationFn: updateCategory,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['categories'] })
+      toast.success('Categoria actualizada')
+      setOpen(false)
+    },
+    onError: (error) => {
+      toast.error(`Error al actualizar la categoria: ${error.message}`)
+    },
+  })
   const categoryForm = useAppForm({
     defaultValues: category,
     validators: {
       onSubmit: CategoriesResponseSchema,
     },
     onSubmit: ({ value }) => {
-      console.log(value)
+      if (!token) throw new Error('No token')
+      mutate({ token, category: value })
     },
   })
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           variant={'ghost'}
