@@ -20,3 +20,12 @@ export const MaterialsEditSchema = z.object({
 })
 
 export type MaterialsEditType = z.infer<typeof MaterialsEditSchema>
+
+export const MaterialsCreateSchema = z.object({
+  code: z.string(),
+  name: z.string(),
+  unit: z.string(),
+  category: z.string().uuid(),
+})
+
+export type MaterialsCreateType = z.infer<typeof MaterialsCreateSchema>
