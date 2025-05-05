@@ -70,6 +70,12 @@ export default function EditMaterial({
             }}
           >
             <div className='flex flex-col gap-4 mb-4'>
+              <materialForm.AppField name='category'>
+                {(field) => (
+                  <field.SelectField label='Categoría' values={categories} />
+                )}
+              </materialForm.AppField>
+
               <materialForm.AppField name='code'>
                 {(field) => (
                   <field.TextField label='Código' placeholder='Código' />
@@ -85,12 +91,6 @@ export default function EditMaterial({
               <materialForm.AppField name='unit'>
                 {(field) => (
                   <field.TextField label='Unidad' placeholder='Unidad' />
-                )}
-              </materialForm.AppField>
-
-              <materialForm.AppField name='category'>
-                {(field) => (
-                  <field.SelectField label='Categoría' values={categories} />
                 )}
               </materialForm.AppField>
             </div>
