@@ -66,9 +66,9 @@ export default function EditMaterial({
 
   const categories = categoriesQuery
     ? categoriesQuery.map((material) => ({
-      value: material.id,
-      label: material.name,
-    }))
+        value: material.id,
+        label: material.name,
+      }))
     : []
 
   return (
