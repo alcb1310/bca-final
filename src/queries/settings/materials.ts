@@ -1,4 +1,5 @@
 import type {
+  MaterialsCreateType,
   MaterialsEditType,
   MaterialsResponseType,
 } from '@/types/settings/materials'
@@ -29,6 +30,27 @@ export async function updateMaterial({
 }: Readonly<{ token: string; material: MaterialsEditType }>) {
   const response = await fetch(`${url}/parametros/materiales/${material.id}`, {
     method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(material),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.error)
+  }
+
+  return (await response.json()) as MaterialsResponseType
+}
+
+export async function createMaterial({
+  token,
+  material,
+}: Readonly<{ token: string; material: MaterialsCreateType }>) {
+  const response = await fetch(`${url}/parametros/materiales`, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
