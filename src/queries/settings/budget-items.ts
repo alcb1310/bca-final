@@ -21,3 +21,24 @@ export async function getAllBudgetItems({
 
   return (await response.json()) as BudgetItemResponseType[]
 }
+
+export async function getAllBudgetItemByAccumulate({
+  token,
+  accumulate,
+}: Readonly<{ token: string; accumulate: boolean }>) {
+  const response = await fetch(`${url}/parametros/partidas`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ accumulate }),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.error)
+  }
+
+  return (await response.json()) as BudgetItemResponseType[]
+}
