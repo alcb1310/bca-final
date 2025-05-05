@@ -69,8 +69,8 @@ function RouteComponent() {
       size: 50,
       enableSorting: false,
       enableHiding: false,
-      cell: () => {
-        return <EditBudgetItem />
+      cell: ({ row }) => {
+        return <EditBudgetItem budgetItem={row.original} />
       },
     },
   ]
