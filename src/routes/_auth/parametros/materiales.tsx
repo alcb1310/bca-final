@@ -2,7 +2,7 @@ import EditMaterial from '@/components/dialogs/parametros/materiales/EditMateria
 import PageTitle from '@/components/titles/PageTitle'
 import { DataTable } from '@/components/ui/DataTable'
 import { getAllCategories } from '@/queries/settings/categories'
-import getAllMaterials from '@/queries/settings/materials'
+import { getAllMaterials } from '@/queries/settings/materials'
 import type { MaterialsResponseType } from '@/types/settings/materials'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, redirect } from '@tanstack/react-router'

@@ -3,9 +3,7 @@ import type { MaterialsResponseType } from '@/types/settings/materials'
 const url = import.meta.env.VITE_SERVER_URL
 if (!url) throw new Error('VITE_SERVER_URL is not defined')
 
-export default async function getAllMaterials({
-  token,
-}: Readonly<{ token: string }>) {
+export async function getAllMaterials({ token }: Readonly<{ token: string }>) {
   const response = await fetch(`${url}/parametros/materiales`, {
     method: 'GET',
     headers: {
