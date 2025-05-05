@@ -1,3 +1,4 @@
+import AddMaterial from '@/components/dialogs/parametros/materiales/AddMaterial'
 import EditMaterial from '@/components/dialogs/parametros/materiales/EditMaterial'
 import PageTitle from '@/components/titles/PageTitle'
 import { DataTable } from '@/components/ui/DataTable'
@@ -74,6 +75,7 @@ function RouteComponent() {
   return (
     <div>
       <PageTitle title='Materiales' />
+      <AddMaterial />
       <DataTable data={data} columns={columns} />
     </div>
   )
