@@ -46,7 +46,7 @@ export default function EditMaterial({
       code: material.code,
       name: material.name,
       unit: material.unit,
-      category: material.category.id,
+      category_id: material.category.id,
     },
     validators: {
       onSubmit: MaterialsEditSchema,
@@ -66,9 +66,9 @@ export default function EditMaterial({
 
   const categories = categoriesQuery
     ? categoriesQuery.map((material) => ({
-        value: material.id,
-        label: material.name,
-      }))
+      value: material.id,
+      label: material.name,
+    }))
     : []
 
   return (
@@ -95,7 +95,7 @@ export default function EditMaterial({
             }}
           >
             <div className='flex flex-col gap-4 mb-4'>
-              <materialForm.AppField name='category'>
+              <materialForm.AppField name='category_id'>
                 {(field) => (
                   <field.SelectField label='Categoría' values={categories} />
                 )}

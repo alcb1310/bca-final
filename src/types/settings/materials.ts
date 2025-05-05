@@ -16,7 +16,7 @@ export const MaterialsEditSchema = z.object({
   code: z.string(),
   name: z.string(),
   unit: z.string(),
-  category: z.string().uuid(),
+  category_id: z.string().uuid(),
 })
 
 export type MaterialsEditType = z.infer<typeof MaterialsEditSchema>
