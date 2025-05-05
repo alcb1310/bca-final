@@ -10,3 +10,13 @@ export const MaterialsResponseSchema = z.object({
 })
 
 export type MaterialsResponseType = z.infer<typeof MaterialsResponseSchema>
+
+export const MaterialsEditSchema = z.object({
+  id: z.string().uuid(),
+  code: z.string(),
+  name: z.string(),
+  unit: z.string(),
+  category: z.string().uuid(),
+})
+
+export type MaterialsEditType = z.infer<typeof MaterialsEditSchema>
