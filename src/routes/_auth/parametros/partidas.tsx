@@ -1,3 +1,4 @@
+import EditBudgetItem from '@/components/dialogs/parametros/partidas/EditBudgetItem'
 import PageTitle from '@/components/titles/PageTitle'
 import { DataTable } from '@/components/ui/DataTable'
 import { Switch } from '@/components/ui/switch'
@@ -6,7 +7,6 @@ import type { BudgetItemResponseType } from '@/types/settings/budget-items'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Pencil } from 'lucide-react'
 
 export const Route = createFileRoute('/_auth/parametros/partidas')({
   component: RouteComponent,
@@ -70,7 +70,7 @@ function RouteComponent() {
       enableSorting: false,
       enableHiding: false,
       cell: () => {
-        return <Pencil size={12} className='text-warning' />
+        return <EditBudgetItem />
       },
     },
   ]
