@@ -10,24 +10,44 @@ import {
 } from '@/components/ui/dialog'
 import { useAppForm } from '@/hooks/bca.form'
 import { getAllCategories } from '@/queries/settings/categories'
+import { createMaterial } from '@/queries/settings/materials'
 import { MaterialsCreateSchema } from '@/types/settings/materials'
 import { useAuth } from '@/utils/auth'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 export default function AddMaterial() {
   const [open, setOpen] = useState(false)
   const { token } = useAuth()
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: createMaterial,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['materials'],
+      })
+      toast.success('Material creado')
+      setOpen(false)
+    },
+    onError: (error) => {
+      toast.error(`Error al crear material: ${error.message}`)
+    },
+  })
   const materialForm = useAppForm({
     defaultValues: {
       code: '',
       name: '',
       unit: '',
-      category: '',
+      category_id: '',
     },
     validators: {
       onSubmit: MaterialsCreateSchema,
+    },
+    onSubmit: ({ value }) => {
+      if (!token) throw new Error('No token')
+      mutate({ token, material: value })
     },
   })
   const { data: categoriesQuery } = useQuery({
@@ -40,9 +60,9 @@ export default function AddMaterial() {
 
   const categories = categoriesQuery
     ? categoriesQuery.map((material) => ({
-      value: material.id,
-      label: material.name,
-    }))
+        value: material.id,
+        label: material.name,
+      }))
     : []
 
   return (
@@ -59,7 +79,7 @@ export default function AddMaterial() {
       </DialogTrigger>
       <DialogContent>
         <DialogTitle>Crear Material</DialogTitle>
-        <DialogDescription>
+        <DialogDescription asChild>
           <form
             onSubmit={(e) => {
               e.preventDefault()
@@ -68,7 +88,7 @@ export default function AddMaterial() {
             }}
           >
             <div className='flex flex-col gap-4 mb-4'>
-              <materialForm.AppField name='category'>
+              <materialForm.AppField name='category_id'>
                 {(field) => (
                   <field.SelectField label='Categoría' values={categories} />
                 )}

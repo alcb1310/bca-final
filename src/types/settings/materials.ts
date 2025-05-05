@@ -25,7 +25,7 @@ export const MaterialsCreateSchema = z.object({
   code: z.string(),
   name: z.string(),
   unit: z.string(),
-  category: z.string().uuid(),
+  category_id: z.string().uuid(),
 })
 
 export type MaterialsCreateType = z.infer<typeof MaterialsCreateSchema>
