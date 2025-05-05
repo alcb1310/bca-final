@@ -10,15 +10,36 @@ import {
 } from '@/components/ui/dialog'
 import { useAppForm } from '@/hooks/bca.form'
 import { getAllCategories } from '@/queries/settings/categories'
-import type { MaterialsResponseType } from '@/types/settings/materials'
+import { updateMaterial } from '@/queries/settings/materials'
+import {
+  MaterialsEditSchema,
+  type MaterialsResponseType,
+} from '@/types/settings/materials'
 import { useAuth } from '@/utils/auth'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Pencil } from 'lucide-react'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 export default function EditMaterial({
   material,
 }: Readonly<{ material: MaterialsResponseType }>) {
+  const [open, setOpen] = useState(false)
   const { token } = useAuth()
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: updateMaterial,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['materials'],
+      })
+      toast.success('Material actualizado')
+      setOpen(false)
+    },
+    onError: (error) => {
+      toast.error(`Error al actualizar material: ${error.message}`)
+    },
+  })
   const materialForm = useAppForm({
     defaultValues: {
       id: material.id,
@@ -27,8 +48,12 @@ export default function EditMaterial({
       unit: material.unit,
       category: material.category.id,
     },
+    validators: {
+      onSubmit: MaterialsEditSchema,
+    },
     onSubmit: ({ value }) => {
-      console.log(value)
+      if (!token) throw new Error('No token')
+      mutate({ token, material: value })
     },
   })
   const { data: categoriesQuery } = useQuery({
@@ -47,7 +72,7 @@ export default function EditMaterial({
     : []
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           variant={'ghost'}
