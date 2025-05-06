@@ -24,15 +24,15 @@ export async function getAllBudgetItems({
 
 export async function getAllBudgetItemByAccumulate({
   token,
-  accumulate,
-}: Readonly<{ token: string; accumulate: boolean }>) {
-  const response = await fetch(`${url}/parametros/partidas`, {
+  accum,
+}: Readonly<{ token: string; accum: boolean }>) {
+  const val = accum ? 'true' : 'false'
+  const response = await fetch(`${url}/parametros/partidas?accum=${val}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ accumulate }),
   })
 
   if (!response.ok) {
