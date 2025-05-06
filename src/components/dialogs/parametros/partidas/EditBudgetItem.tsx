@@ -27,12 +27,15 @@ export default function EditBudgetItem({
       accumulate: budgetItem.accumulate,
       parent_id: budgetItem.parent?.id,
     },
+    onSubmit: async ({ value }) => {
+      alert(JSON.stringify(value))
+    },
   })
   const { data: parentBudgetItems } = useQuery({
     queryKey: ['budget-items', 'parent'],
     queryFn: () => {
       if (!token) throw new Error('No token')
-      return getAllBudgetItemByAccumulate({ token, accumulate: true })
+      return getAllBudgetItemByAccumulate({ token, accum: true })
     },
   })
 
@@ -45,12 +48,15 @@ export default function EditBudgetItem({
     })
     : []
 
-  parentItems.unshift({ value: '', label: 'Ninguno' })
-
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant='ghost' size={'icon'} className='text-warning'>
+        <Button
+          variant='ghost'
+          size={'icon'}
+          className='text-warning'
+          onClick={() => budgetItemForm.reset()}
+        >
           <Pencil />
         </Button>
       </DialogTrigger>
@@ -65,10 +71,40 @@ export default function EditBudgetItem({
               budgetItemForm.handleSubmit()
             }}
           >
+            <div className='flex flex-col gap-4 mb-4'>
+              <budgetItemForm.AppField name='parent_id'>
+                {(field) => (
+                  <field.SelectField
+                    label='Padre'
+                    values={parentItems}
+                    disabled
+                  />
+                )}
+              </budgetItemForm.AppField>
+
+              <budgetItemForm.AppField name='code'>
+                {(field) => <field.TextField label='Codigo' />}
+              </budgetItemForm.AppField>
+
+              <budgetItemForm.AppField name='name'>
+                {(field) => <field.TextField label='Nombre' />}
+              </budgetItemForm.AppField>
+
+              <budgetItemForm.AppField name='accumulate'>
+                {(field) => <field.SwitchField label='Accumula' />}
+              </budgetItemForm.AppField>
+            </div>
+
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant={'secondary'}>Cancelar</Button>
               </DialogClose>
+              <budgetItemForm.AppForm>
+                <budgetItemForm.SubscribeButton
+                  label='Guardar'
+                  className='w-fit'
+                />
+              </budgetItemForm.AppForm>
             </DialogFooter>
           </form>
         </DialogDescription>
