@@ -1,4 +1,7 @@
-import type { BudgetItemResponseType } from '@/types/settings/budget-items'
+import type {
+  BudgetItemEditType,
+  BudgetItemResponseType,
+} from '@/types/settings/budget-items'
 
 const url = import.meta.env.VITE_SERVER_URL
 if (!url) throw new Error('VITE_SERVER_URL is not defined')
@@ -41,4 +44,25 @@ export async function getAllBudgetItemByAccumulate({
   }
 
   return (await response.json()) as BudgetItemResponseType[]
+}
+
+export async function updateBudgetItem({
+  token,
+  item,
+}: Readonly<{ token: string; item: BudgetItemEditType }>) {
+  const response = await fetch(`${url}/parametros/partidas/${item.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(item),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.error)
+  }
+
+  return
 }
