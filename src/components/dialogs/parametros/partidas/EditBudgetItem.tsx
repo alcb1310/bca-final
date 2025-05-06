@@ -9,26 +9,56 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useAppForm } from '@/hooks/bca.form'
-import { getAllBudgetItemByAccumulate } from '@/queries/settings/budget-items'
+import {
+  getAllBudgetItemByAccumulate,
+  updateBudgetItem,
+} from '@/queries/settings/budget-items'
 import type { BudgetItemResponseType } from '@/types/settings/budget-items'
 import { useAuth } from '@/utils/auth'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Pencil } from 'lucide-react'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 export default function EditBudgetItem({
   budgetItem,
 }: Readonly<{ budgetItem: BudgetItemResponseType }>) {
+  const [open, setOpen] = useState(false)
+  const queryClient = useQueryClient()
   const { token } = useAuth()
+  const { mutate } = useMutation({
+    mutationFn: updateBudgetItem,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['budget-items'] })
+      toast.success('Partida actualizada correctamente')
+      setOpen(false)
+    },
+    onError: (error) => {
+      toast.error(`Error al actualizar partida: ${error.message}`)
+    },
+  })
   const budgetItemForm = useAppForm({
     defaultValues: {
       id: budgetItem.id,
       code: budgetItem.code,
       name: budgetItem.name,
+      level: budgetItem.level,
       accumulate: budgetItem.accumulate,
       parent_id: budgetItem.parent?.id,
     },
     onSubmit: async ({ value }) => {
-      alert(JSON.stringify(value))
+      if (!token) throw new Error('No token')
+      mutate({
+        token,
+        item: {
+          id: value.id,
+          code: value.code,
+          name: value.name,
+          level: value.level,
+          accumulate: value.accumulate,
+          parent_id: value.parent_id,
+        },
+      })
     },
   })
   const { data: parentBudgetItems } = useQuery({
@@ -41,15 +71,15 @@ export default function EditBudgetItem({
 
   const parentItems = parentBudgetItems
     ? parentBudgetItems.map((item) => {
-      return {
-        value: item.id,
-        label: item.name,
-      }
-    })
+        return {
+          value: item.id,
+          label: item.name,
+        }
+      })
     : []
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           variant='ghost'
