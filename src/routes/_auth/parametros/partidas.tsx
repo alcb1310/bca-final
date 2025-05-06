@@ -1,3 +1,4 @@
+import AddBudgetItem from '@/components/dialogs/parametros/partidas/AddBudgetItem'
 import EditBudgetItem from '@/components/dialogs/parametros/partidas/EditBudgetItem'
 import PageTitle from '@/components/titles/PageTitle'
 import { DataTable } from '@/components/ui/DataTable'
@@ -89,6 +90,7 @@ function RouteComponent() {
   return (
     <div>
       <PageTitle title='Partidas' />
+      <AddBudgetItem />
       <DataTable columns={columns} data={data} />
     </div>
   )
