@@ -16,3 +16,14 @@ export const BudgetItemResponseSchema = z.object({
 })
 
 export type BudgetItemResponseType = z.infer<typeof BudgetItemResponseSchema>
+
+export const BudgetItemEditSchema = z.object({
+  id: z.string().uuid(),
+  code: z.string(),
+  name: z.string(),
+  level: z.number(),
+  accumulate: z.boolean(),
+  parent_id: z.string().uuid().optional(),
+})
+
+export type BudgetItemEditType = z.infer<typeof BudgetItemEditSchema>
