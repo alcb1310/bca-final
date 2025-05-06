@@ -2,7 +2,10 @@ import EditBudgetItem from '@/components/dialogs/parametros/partidas/EditBudgetI
 import PageTitle from '@/components/titles/PageTitle'
 import { DataTable } from '@/components/ui/DataTable'
 import { Switch } from '@/components/ui/switch'
-import { getAllBudgetItems } from '@/queries/settings/budget-items'
+import {
+  getAllBudgetItemByAccumulate,
+  getAllBudgetItems,
+} from '@/queries/settings/budget-items'
 import type { BudgetItemResponseType } from '@/types/settings/budget-items'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, redirect } from '@tanstack/react-router'
@@ -13,11 +16,19 @@ export const Route = createFileRoute('/_auth/parametros/partidas')({
   loader: async ({ context: { auth, queryClient } }) => {
     const token = auth.token
     if (!token) throw redirect({ to: '/login' })
-
-    await queryClient.prefetchQuery({
-      queryKey: ['budget-items'],
-      queryFn: () => getAllBudgetItems({ token }),
-    })
+    await Promise.all([
+      queryClient.prefetchQuery({
+        queryKey: ['budget-items'],
+        queryFn: () => getAllBudgetItems({ token }),
+      }),
+      queryClient.prefetchQuery({
+        queryKey: ['budget-items', 'parent'],
+        queryFn: () => {
+          if (!token) throw new Error('No token')
+          return getAllBudgetItemByAccumulate({ token, accum: true })
+        },
+      }),
+    ])
 
     return { token }
   },
