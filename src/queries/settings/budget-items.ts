@@ -1,4 +1,5 @@
 import type {
+  BudgetItemCreateType,
   BudgetItemEditType,
   BudgetItemResponseType,
 } from '@/types/settings/budget-items'
@@ -65,4 +66,25 @@ export async function updateBudgetItem({
   }
 
   return
+}
+
+export async function createBudgetItem({
+  token,
+  item,
+}: Readonly<{ token: string; item: BudgetItemCreateType }>) {
+  const response = await fetch(`${url}/parametros/partidas`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(item),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.error)
+  }
+
+  return await response.json()
 }
