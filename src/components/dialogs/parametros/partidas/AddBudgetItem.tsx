@@ -9,18 +9,40 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useAppForm } from '@/hooks/bca.form'
-import { getAllBudgetItemByAccumulate } from '@/queries/settings/budget-items'
+import {
+  createBudgetItem,
+  getAllBudgetItemByAccumulate,
+} from '@/queries/settings/budget-items'
 import { useAuth } from '@/utils/auth'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query'
 import { Plus } from 'lucide-react'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 export default function AddBudgetItem() {
+  const [open, setOpen] = useState(false)
   const { token } = useAuth()
   const { data: parentBudgetItems } = useSuspenseQuery({
-    queryKey: ['categories', 'parent'],
+    queryKey: ['budget-items', 'parent'],
     queryFn: () => {
       if (!token) throw new Error('No token')
       return getAllBudgetItemByAccumulate({ token, accum: true })
+    },
+  })
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: createBudgetItem,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['budget-items'] })
+      toast('Partida creada')
+      setOpen(false)
+    },
+    onError: (error) => {
+      toast(`Error al crear la partida: ${error.message}`)
     },
   })
 
@@ -33,23 +55,30 @@ export default function AddBudgetItem() {
     },
     onSubmit: async ({ value }) => {
       if (!token) throw new Error('No token')
-      console.log('submittig', value)
+      mutate({
+        token,
+        item: value,
+      })
     },
   })
 
   const parentItems = parentBudgetItems
     ? parentBudgetItems.map((item) => {
-        return {
-          value: item.id,
-          label: item.name,
-        }
-      })
+      return {
+        value: item.id,
+        label: item.name,
+      }
+    })
     : []
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={'ghost'} className='flex gap-2 items-center mb-4'>
+        <Button
+          variant={'ghost'}
+          className='flex gap-2 items-center mb-4'
+          onClick={() => budgetItemForm.reset()}
+        >
           <Plus />
           Agregar partida
         </Button>
