@@ -64,11 +64,11 @@ export default function AddBudgetItem() {
 
   const parentItems = parentBudgetItems
     ? parentBudgetItems.map((item) => {
-      return {
-        value: item.id,
-        label: item.name,
-      }
-    })
+        return {
+          value: item.id,
+          label: item.name,
+        }
+      })
     : []
 
   return (
